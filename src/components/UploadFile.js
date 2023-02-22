@@ -3,11 +3,13 @@ import { useId } from 'react'
 import { useImage } from '@/context/Image'
 import { useDragAndDrop } from '@/hooks/useDragAndDrop'
 import { DRAG_IMAGE_STATES } from '@/hooks/useDragAndDrop'
+import { useNavigation } from '@/hooks/useNavigation'
 
 import { Upload } from './icons/Upload'
 
 export default function UploadFile() {
   const inputUploadId = useId()
+  const { navigateToEditor } = useNavigation()
 
   const { handleDragImage, handleUploadImage } = useImage()
 
@@ -16,15 +18,17 @@ export default function UploadFile() {
 
   const isDragActive = drag === DRAG_IMAGE_STATES.DRAG_OVER
 
-  const handleUploadFormOnDrop = e => {
+  const handleUploadFormOnDrop = async e => {
     e.preventDefault()
     handleDrop(e)
-    handleDragImage(e)
+    await handleDragImage(e)
+    navigateToEditor()
   }
 
-  const handleUploadInput = e => {
+  const handleUploadInput = async e => {
     e.preventDefault()
-    handleUploadImage(e)
+    await handleUploadImage(e)
+    navigateToEditor()
   }
 
   return (
