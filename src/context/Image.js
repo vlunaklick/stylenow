@@ -12,7 +12,6 @@ const ImageProvider = ({ children }) => {
     if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0]
       const src = await convertToImageSrc(file)
-      console.log(src)
 
       setFile(file)
       setImageURL(src)
@@ -31,7 +30,14 @@ const ImageProvider = ({ children }) => {
 
   return (
     <ImageContext.Provider
-      value={{ imageURL, file, handleDragImage, handleUploadImage }}
+      value={{
+        imageURL,
+        file,
+        setFile,
+        setImageURL,
+        handleDragImage,
+        handleUploadImage,
+      }}
     >
       {children}
     </ImageContext.Provider>
