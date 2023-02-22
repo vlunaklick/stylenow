@@ -34,7 +34,7 @@ export default function UploadFile() {
       onDragOver={handerDragEnter}
       onDrop={handleUploadFormOnDrop}
       className={
-        'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] p-4 border-2 border-dashed rounded-md ' +
+        'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] min-h-[200px] p-4 border-2 border-dashed rounded-md bg-white ' +
         (isDragActive ? 'border-indigo-500' : 'border-gray-200')
       }
     >
@@ -55,7 +55,7 @@ export default function UploadFile() {
       <div className="flex text-sm text-gray-600 flex-wrap justify-center">
         <label
           htmlFor={inputUploadId}
-          className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+          className="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500"
         >
           <span>Upload a file</span>
           <input
