@@ -1,12 +1,9 @@
-import { useImage } from '@/context/Image'
 import UploadFile from './UploadFile'
 
 export default function Hero() {
-  const { imageURL } = useImage()
-
   return (
     <>
-      <div className="flex gap-6 py-16 px-4 sm:py-14 flex-col md:flex-row">
+      <div className="flex gap-6 py-16 px-4 sm:py-14 flex-col md:flex-row h-full">
         <section>
           <h2 className="text-3xl font-extrabold tracking-tight text-black sm:text-4xl lg:text-6xl">
             <span className="block text-indigo-400">
@@ -21,7 +18,7 @@ export default function Hero() {
           </p>
         </section>
 
-        <section className="h-full">
+        <section>
           <UploadFile />
         </section>
       </div>
