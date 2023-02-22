@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --background-color-ligth: #f8fafc;
+  --font-color-ligth: #0f172a;
+
+  --background-color-dark: hsl(210deg, 30%, 8%);
+  --font-color-dark: #fff;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html.dark {
+  background-color: var(--background-color-dark);
+  color: var(--font-color-dark);
+}
+
+html.light {
+  background-color: var(--background-color-ligth);
+  color: var(--font-color-ligth);
+}
