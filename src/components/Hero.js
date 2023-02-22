@@ -10,11 +10,10 @@ export default function Hero() {
               Crop your photo instantly!
             </span>
           </h2>
-          <p className="mt-5 max-w-3xl text-xl text-gray-600">
-            CropNow is a free online tool for easy image cropping and resizing.
-            Get perfect dimensions and aspect ratios for your website, social
-            media, and more. Say goodbye to manual editing and try CropNow
-            today!
+          <p className="mt-5 max-w-3xl text-md text-gray-600">
+            Say goodbye to manual image editing with CropNow - the free online
+            tool for effortless, perfect dimension and aspect ratio adjustments
+            on your website, social media, and beyond.
           </p>
         </section>
 
