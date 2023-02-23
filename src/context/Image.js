@@ -1,12 +1,14 @@
 import { useState, createContext, useContext } from 'react'
 
 import { convertToImageSrc } from '@/utils'
+import { uploadImage } from '@/services/cloudinary'
 
 const ImageContext = createContext()
 
 const ImageProvider = ({ children }) => {
   const [file, setFile] = useState(null)
-  const [imageURL, setImageURL] = useState(null)
+  const [imageURL, setImageURL] = useState('')
+  const [publicID, setPublicID] = useState('')
 
   const handleDragImage = async e => {
     if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
@@ -15,6 +17,10 @@ const ImageProvider = ({ children }) => {
 
       setFile(file)
       setImageURL(src)
+
+      uploadImage(file).then(res => {
+        setPublicID(res.public_id)
+      })
     }
   }
 
@@ -25,7 +31,24 @@ const ImageProvider = ({ children }) => {
 
       setFile(file)
       setImageURL(src)
+
+      uploadImage(file).then(res => {
+        setPublicID(res.public_id)
+      })
     }
+  }
+
+  const setDataTest = publicID => {
+    setPublicID(publicID)
+    setImageURL(
+      `https://res.cloudinary.com/djzg2tf6o/image/upload/v1677107271/${publicID}`
+    )
+  }
+
+  const resetImage = () => {
+    setFile(null)
+    setImageURL('')
+    setPublicID('')
   }
 
   return (
@@ -33,10 +56,11 @@ const ImageProvider = ({ children }) => {
       value={{
         imageURL,
         file,
-        setFile,
-        setImageURL,
+        publicID,
+        setDataTest,
         handleDragImage,
         handleUploadImage,
+        resetImage,
       }}
     >
       {children}
