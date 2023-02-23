@@ -1,3 +1,6 @@
+export const UPLOAD_URL =
+  'https://api.cloudinary.com/v1_1/djzg2tf6o/image/upload'
+
 export const TEST_URLS = {
   gaming:
     'https://res.cloudinary.com/djzg2tf6o/image/upload/v1677107271/gaming_qv9ygp.webp',

@@ -7,7 +7,7 @@ export default function Hero() {
         <section>
           <h2 className="text-5xl font-extrabold tracking-tight text-black md:text-6xl">
             <span className="block text-indigo-400">
-              Crop your photo instantly!
+              Edit your photo instantly!
             </span>
           </h2>
           <p className="mt-5 max-w-3xl text-md text-gray-600">

@@ -45,7 +45,7 @@ const ImageProvider = ({ children }) => {
     )
   }
 
-  const resetImage = () => {
+  const resetData = () => {
     setFile(null)
     setImageURL('')
     setPublicID('')
@@ -60,7 +60,7 @@ const ImageProvider = ({ children }) => {
         setDataTest,
         handleDragImage,
         handleUploadImage,
-        resetImage,
+        resetData,
       }}
     >
       {children}
