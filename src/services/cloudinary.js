@@ -1,6 +1,8 @@
 import { Cloudinary } from '@cloudinary/url-gen'
-import { thumbnail } from '@cloudinary/url-gen/actions/resize'
+import { quality } from '@cloudinary/url-gen/actions/delivery'
 import { v4 as uuidv4 } from 'uuid'
+
+import { UPLOAD_URL } from '@/constants'
 
 const cloudinary = new Cloudinary({
   cloud: {
@@ -11,8 +13,6 @@ const cloudinary = new Cloudinary({
   },
 })
 
-const URL = 'https://api.cloudinary.com/v1_1/djzg2tf6o/image/upload'
-
 export const uploadImage = async file => {
   const formData = new FormData()
   formData.append('upload_preset', 'ml_default')
@@ -21,7 +21,7 @@ export const uploadImage = async file => {
   formData.append('file', file)
   formData.append('public_id', uuidv4())
 
-  const res = await fetch(URL, {
+  const res = await fetch(UPLOAD_URL, {
     method: 'POST',
     body: formData,
   })
@@ -31,10 +31,10 @@ export const uploadImage = async file => {
   return data
 }
 
-export const resizeFile = async (publicId, width, height) => {
-  const image = cloudinary.image(publicId)
+export const improveQuality = (publicID, qualityImg) => {
+  const image = cloudinary.image(publicID)
 
-  image.resize(thumbnail(width, height))
+  image.delivery(quality(qualityImg))
 
   const url = image.toURL()
 
