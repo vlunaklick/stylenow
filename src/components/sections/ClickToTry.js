@@ -2,20 +2,18 @@
 import { useImage } from '@/context/Image'
 import { useNavigation } from '@/hooks/useNavigation'
 
-import gaming from '@/assets/gaming.webp'
-import dogs from '@/assets/dogs.webp'
-import landscape from '@/assets/landscape.jpeg'
+import { TEST_URLS } from '@/constants'
 
 import TestImage from '@/components/TestImage'
 
 export default function ClickToTry() {
   const { navigateToEditor } = useNavigation()
 
-  const { setFile, setImageURL } = useImage()
+  const { setDataTest } = useImage()
 
-  const handleUploadImage = e => {
-    setImageURL(e)
-    setFile(e.src)
+  const handleUploadImage = src => {
+    const publicID = src.split('/').pop().split('.')[0]
+    setDataTest(publicID)
     navigateToEditor()
   }
 
@@ -25,20 +23,20 @@ export default function ClickToTry() {
 
       <div className="flex flex-row flex-wrap gap-4 justify-center w-full h-full mt-5">
         <TestImage
-          onClick={() => handleUploadImage(gaming)}
-          imgSrc={gaming.src}
+          onClick={() => handleUploadImage(TEST_URLS.gaming)}
+          imgSrc={TEST_URLS.gaming}
           imgAlt="Test Image Gaming"
         />
 
         <TestImage
-          onClick={() => handleUploadImage(dogs)}
-          imgSrc={dogs.src}
+          onClick={() => handleUploadImage(TEST_URLS.dogs)}
+          imgSrc={TEST_URLS.dogs}
           imgAlt="Test Image Dogs"
         />
 
         <TestImage
-          onClick={() => handleUploadImage(landscape)}
-          imgSrc={landscape.src}
+          onClick={() => handleUploadImage(TEST_URLS.landscape)}
+          imgSrc={TEST_URLS.landscape}
           imgAlt="Test Image Landscape"
         />
       </div>
