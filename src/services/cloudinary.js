@@ -31,12 +31,12 @@ export const uploadImage = async file => {
   return data
 }
 
-export const improveQuality = (publicID, qualityImg) => {
+export const optimizeImage = (publicID, qualityImg) => {
   const image = cloudinary.image(publicID)
 
   image.delivery(quality(qualityImg))
 
-  const url = image.toURL()
+  const url = image.toURL() + '.webp'
 
   return url
 }

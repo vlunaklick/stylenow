@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 import { useImage } from '@/context/Image'
 
-import { improveQuality } from '@/services/cloudinary'
+import { optimizeImage } from '@/services/cloudinary'
 
 import CustomImage from '@/components/CustomImage'
 import { Close } from '@/components/icons/Close'
@@ -25,8 +25,8 @@ export default function Editor() {
     navigateToHome()
   }
 
-  const handleImproveQuality = async () => {
-    const url = improveQuality(publicID, 'auto:best')
+  const handleOptimizeImage = async () => {
+    const url = optimizeImage(publicID, 'auto:best')
 
     setEditedImage(url)
   }
@@ -64,10 +64,10 @@ export default function Editor() {
 
             <section className="flex flex-col items-center justify-center">
               <button
-                onClick={handleImproveQuality}
+                onClick={handleOptimizeImage}
                 className="bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg"
               >
-                Improve quality
+                Optimize image
               </button>
             </section>
           </div>
