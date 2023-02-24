@@ -41,8 +41,8 @@ export default function Editor() {
         <title>Cropnow - Editor</title>
       </Head>
 
-      <main className="max-w-3xl mx-auto mt-4 w-full px-4 flex flex-col gap-8">
-        <h1 className="text-4xl font-bold text-center max-w-lg mx-auto text-slate-800 mt-4">
+      <main className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8">
+        <h1 className="text-4xl font-bold text-center max-w-lg mx-auto text-slate-800 mt-10">
           Unleash your creativity with your image
         </h1>
 
