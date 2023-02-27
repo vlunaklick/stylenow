@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 
 import { useImage } from '@/context/Image'
-
-import { optimizeImage } from '@/services/cloudinary'
+import { useEditImage } from '@/hooks/useEditImage'
+import { useNavigation } from '@/hooks/useNavigation'
 
 import CustomImage from '@/components/CustomImage'
 import { Close } from '@/components/icons/Close'
-import { useNavigation } from '@/hooks/useNavigation'
 
 export default function Editor() {
   const { image, imageURL, resetData } = useImage()
+  const { editedImage, editedImageURL, handleOptimizeImage } = useEditImage({
+    publicId: image.publicID,
+  })
+  const [section, setSection] = useState('edited')
   const { navigateToHome } = useNavigation()
-
-  const [editedImage, setEditedImage] = useState(null)
 
   useEffect(() => {
     if (!imageURL) {
@@ -26,15 +27,11 @@ export default function Editor() {
     navigateToHome()
   }
 
-  const handleOptimizeImage = async () => {
-    const url = optimizeImage(publicID, 'auto:best')
-
-    setEditedImage(url)
-  }
-
   if (!imageURL) {
     return null
   }
+
+  const imageToDisplay = section === 'edited' ? editedImageURL : imageURL
 
   return (
     <>
@@ -42,24 +39,49 @@ export default function Editor() {
         <title>Cropnow - Editor</title>
       </Head>
 
-      <main className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8">
+      <main className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 min-h-[calc(100vh-52px-86px)]">
         <h1 className="text-4xl font-bold text-center max-w-lg mx-auto text-slate-800 mt-10">
-          Unleash your creativity with your image
+          Unleash your
+          <span className="to-indigo-400 from-indigo-800 text-transparent bg-gradient-to-t bg-clip-text">
+            {' '}
+            creativity{' '}
+          </span>
+          with your image
         </h1>
 
-        <section className="flex flex-col items-center p-2 bg-white border border-slate-200 rounded-lg sm:max-h-96 gap-2">
-          <div className="flex flex-row justify-end w-full">
-            <button onClick={handleResetImage}>
-              <Close className="w-6 h-6 fill-slate-600" />
-            </button>
-          </div>
+        <section className="relative flex flex-col items-center p-2 bg-white border border-slate-200 rounded-lg sm:max-h-96 gap-2">
+          <button onClick={handleResetImage} className="absolute top-2 right-2">
+            <Close className="w-6 h-6 fill-slate-400 hover:fill-slate-500 transition-colors" />
+          </button>
 
           <div className="flex flex-col w-full sm:flex-row gap-2">
-            <section className="max-h-96 sm:max-w-[500px] flex justify-center overflow-hidden w-full sm:w-auto">
+            <section className="max-h-96 sm:max-w-[500px] flex flex-col justify-center overflow-hidden w-full">
+              <div className="flex w-full gap-4 mb-2">
+                <button
+                  onClick={() => setSection('original')}
+                  className={`${
+                    section === 'original'
+                      ? 'text-indigo-800 border-indigo-800'
+                      : 'text-slate-500'
+                  } font-medium border-b-2 border-transparent`}
+                >
+                  Original
+                </button>
+                <button
+                  onClick={() => setSection('edited')}
+                  className={`${
+                    section === 'edited'
+                      ? 'text-indigo-800 border-indigo-800'
+                      : 'text-slate-500'
+                  } font-medium border-b-2 border-transparent`}
+                >
+                  Edited
+                </button>
+              </div>
               <CustomImage
-                src={editedImage || imageURL}
-                alt="Image to edit"
-                className="max-h-80 object-contain border border-slate-200 rounded-lg sm:mx-0 mx-auto"
+                src={imageToDisplay}
+                alt={section === 'edited' ? 'Edited image' : 'Original image'}
+                className="max-h-80 object-contain border border-slate-200 rounded-lg mx-auto"
               />
             </section>
 
