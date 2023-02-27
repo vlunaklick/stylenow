@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default function CustomImage({ src, ...args }) {
+export default function CustomImage({ src, className, ...args }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -9,15 +9,17 @@ export default function CustomImage({ src, ...args }) {
     img.onload = () => setLoading(false)
   }, [src])
 
-  if (loading) {
-    return (
-      <div className="w-96 aspect-video bg-gray-300 animate-pulse rounded-lg" />
-    )
-  }
-
   return (
     <>
-      <img src={src} {...args} />
+      <img
+        src={src}
+        className={
+          loading
+            ? 'w-96 aspect-video bg-slate-300 animate-pulse rounded-lg mx-auto'
+            : className
+        }
+        {...args}
+      />
     </>
   )
 }
