@@ -10,15 +10,16 @@ import { Close } from '@/components/icons/Close'
 import { useNavigation } from '@/hooks/useNavigation'
 
 export default function Editor() {
-  const { imageURL, publicID, resetData } = useImage()
+  const { image, imageURL, resetData } = useImage()
   const { navigateToHome } = useNavigation()
+
   const [editedImage, setEditedImage] = useState(null)
 
   useEffect(() => {
     if (!imageURL) {
       navigateToHome()
     }
-  }, [imageURL])
+  }, [imageURL, navigateToHome])
 
   const handleResetImage = () => {
     resetData()

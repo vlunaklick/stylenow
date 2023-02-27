@@ -1,45 +1,68 @@
 import { useId } from 'react'
 
 import { useImage } from '@/context/Image'
-import { useDragAndDrop } from '@/hooks/useDragAndDrop'
-import { DRAG_IMAGE_STATES } from '@/hooks/useDragAndDrop'
+import { useDropzone } from '@/hooks/useDropzone'
 import { useNavigation } from '@/hooks/useNavigation'
+
+import { uploadImage } from '@/services/cloudinary'
 
 import { Upload } from './icons/Upload'
 
 export default function UploadFile() {
   const inputUploadId = useId()
+
+  const {
+    error,
+    isDragActive,
+    isUploading,
+    isError,
+    onDragEnter,
+    onDragLeave,
+    onDrop,
+    onInput,
+  } = useDropzone()
+
   const { navigateToEditor } = useNavigation()
 
-  const { handleDragImage, handleUploadImage } = useImage()
+  const { handlePublicId } = useImage()
 
-  const { drag, handerDragEnter, handleDragLeave, handleDrop } =
-    useDragAndDrop()
-
-  const isDragActive = drag === DRAG_IMAGE_STATES.DRAG_OVER
-
-  const handleUploadFormOnDrop = async e => {
+  const handleUploadFormOnDrop = e => {
     e.preventDefault()
-    handleDrop(e)
-    await handleDragImage(e)
-    navigateToEditor()
+
+    onDrop(e, file => {
+      return uploadImage(file).then(res => {
+        const { public_id: publicId } = res
+
+        handlePublicId(publicId)
+        navigateToEditor()
+      })
+    })
   }
 
   const handleUploadInput = async e => {
     e.preventDefault()
-    await handleUploadImage(e)
-    navigateToEditor()
+
+    onInput(e, file => {
+      return uploadImage(file).then(res => {
+        const { public_id: publicId } = res
+
+        handlePublicId(publicId)
+        navigateToEditor()
+      })
+    })
   }
 
   return (
     <form
-      onDragEnter={handerDragEnter}
-      onDragLeave={handleDragLeave}
-      onDragOver={handerDragEnter}
+      onDragEnter={onDragEnter}
+      onDragLeave={onDragLeave}
+      onDragOver={onDragEnter}
       onDrop={handleUploadFormOnDrop}
       className={
         'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] min-h-[200px] p-4 border-2 border-dashed rounded-md bg-white ' +
-        (isDragActive ? 'border-indigo-500' : 'border-slate-200')
+        (isDragActive ? 'border-indigo-500' : 'border-slate-200') +
+        (isUploading ? ' opacity-50 pointer-events-none' : '') +
+        (isError ? ' border-red-500' : '')
       }
     >
       <label htmlFor="file-upload" className="sr-only">
@@ -59,7 +82,10 @@ export default function UploadFile() {
       <div className="flex text-sm text-slate-600 flex-wrap justify-center">
         <label
           htmlFor={inputUploadId}
-          className="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500"
+          className={
+            'relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500' +
+            (isError ? ' text-red-500 hover:text-red-400' : '')
+          }
         >
           <span>Upload a file</span>
           <input

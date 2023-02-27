@@ -20,6 +20,7 @@ export const uploadImage = async file => {
   formData.append('api_key', 892432879355161)
   formData.append('file', file)
   formData.append('public_id', uuidv4())
+  formData.append('folder', 'cropnow')
 
   const res = await fetch(UPLOAD_URL, {
     method: 'POST',
@@ -29,6 +30,12 @@ export const uploadImage = async file => {
   const data = await res.json()
 
   return data
+}
+
+export const getImage = publicID => {
+  const image = cloudinary.image(publicID)
+
+  return image
 }
 
 export const optimizeImage = (publicID, qualityImg) => {

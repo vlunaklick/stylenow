@@ -4,6 +4,7 @@ export function Cloudinary({ ...args }) {
       xmlns="http://www.w3.org/2000/svg"
       className="w-36"
       viewBox="0 0 500 96.77"
+      fill="#3448c5"
       {...args}
     >
       <g data-name="Layer 2">

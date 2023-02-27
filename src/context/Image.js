@@ -1,65 +1,39 @@
-import { useState, createContext, useContext } from 'react'
+import { useState, useEffect, createContext, useContext } from 'react'
 
-import { convertToImageSrc } from '@/utils'
-import { uploadImage } from '@/services/cloudinary'
+import { getImage } from '@/services/cloudinary'
 
 const ImageContext = createContext()
 
 const ImageProvider = ({ children }) => {
-  const [file, setFile] = useState(null)
+  const [publicId, setPublicId] = useState('')
+  const [image, setImage] = useState('')
   const [imageURL, setImageURL] = useState('')
-  const [publicID, setPublicID] = useState('')
 
-  const handleDragImage = async e => {
-    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0]
-      const src = await convertToImageSrc(file)
+  useEffect(() => {
+    if (publicId) {
+      const image = getImage(publicId)
 
-      setFile(file)
-      setImageURL(src)
-
-      uploadImage(file).then(res => {
-        setPublicID(res.public_id)
-      })
+      setImage(image)
+      setImageURL(image.toURL())
     }
-  }
+  }, [publicId])
 
-  const handleUploadImage = async e => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0]
-      const src = await convertToImageSrc(file)
-
-      setFile(file)
-      setImageURL(src)
-
-      uploadImage(file).then(res => {
-        setPublicID(res.public_id)
-      })
-    }
-  }
-
-  const setDataTest = publicID => {
-    setPublicID(publicID)
-    setImageURL(
-      `https://res.cloudinary.com/djzg2tf6o/image/upload/v1677107271/${publicID}`
-    )
+  const handlePublicId = publicId => {
+    setPublicId(publicId)
   }
 
   const resetData = () => {
-    setFile(null)
+    setPublicId('')
+    setImage('')
     setImageURL('')
-    setPublicID('')
   }
 
   return (
     <ImageContext.Provider
       value={{
+        image,
         imageURL,
-        file,
-        publicID,
-        setDataTest,
-        handleDragImage,
-        handleUploadImage,
+        handlePublicId,
         resetData,
       }}
     >

@@ -9,11 +9,11 @@ import TestImage from '@/components/TestImage'
 export default function ClickToTry() {
   const { navigateToEditor } = useNavigation()
 
-  const { setDataTest } = useImage()
+  const { handlePublicId } = useImage()
 
   const handleUploadImage = src => {
     const publicID = src.split('/').pop().split('.')[0]
-    setDataTest(publicID)
+    handlePublicId(publicID)
     navigateToEditor()
   }
 
