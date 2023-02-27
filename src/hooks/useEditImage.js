@@ -14,11 +14,13 @@ export function useEditImage({ publicId }) {
       setImageURL(editedImage.toURL())
     }
 
-    fetchImage()
+    if (publicId) {
+      fetchImage()
+    }
   }, [publicId])
 
   const handleOptimizeImage = async () => {
-    const url = optimizeImage(publicId, 'auto:best')
+    const url = optimizeImage(image, 'auto:best')
 
     setImage(url)
   }

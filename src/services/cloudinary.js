@@ -38,12 +38,8 @@ export const getImage = publicID => {
   return image
 }
 
-export const optimizeImage = (publicID, qualityImg) => {
-  const image = cloudinary.image(publicID)
+export const optimizeImage = (image, qualityImg) => {
+  const optimizedImage = image.delivery(quality(qualityImg))
 
-  image.delivery(quality(qualityImg))
-
-  const url = image.toURL() + '.webp'
-
-  return url
+  return optimizedImage
 }

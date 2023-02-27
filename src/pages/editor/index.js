@@ -49,8 +49,8 @@ export default function Editor() {
           with your image
         </h1>
 
-        <section className="relative flex flex-col items-center p-2 bg-white border border-slate-200 rounded-lg sm:max-h-96 gap-2">
-          <button onClick={handleResetImage} className="absolute top-2 right-2">
+        <section className="relative flex flex-col items-center p-4 bg-white border border-slate-200 rounded-lg sm:max-h-96 gap-4">
+          <button onClick={handleResetImage} className="absolute top-4 right-4">
             <Close className="w-6 h-6 fill-slate-400 hover:fill-slate-500 transition-colors" />
           </button>
 
