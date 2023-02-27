@@ -6,6 +6,7 @@ import { ImageProvider } from '@/context/Image'
 
 import Header from '@/components/Header'
 import Head from 'next/head'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,8 @@ export default function App({ Component, pageProps }) {
         <Header />
 
         <Component {...pageProps} />
+
+        <Footer />
       </ImageProvider>
       <style jsx global>{`
         body {
