@@ -39,7 +39,7 @@ export default function UploadFile() {
       onDrop={handleUploadFormOnDrop}
       className={
         'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] min-h-[200px] p-4 border-2 border-dashed rounded-md bg-white ' +
-        (isDragActive ? 'border-indigo-500' : 'border-gray-200')
+        (isDragActive ? 'border-indigo-500' : 'border-slate-200')
       }
     >
       <label htmlFor="file-upload" className="sr-only">
@@ -56,7 +56,7 @@ export default function UploadFile() {
           'w-12 h-12 ' + (isDragActive ? 'fill-indigo-700' : 'fill-slate-600')
         }
       />
-      <div className="flex text-sm text-gray-600 flex-wrap justify-center">
+      <div className="flex text-sm text-slate-600 flex-wrap justify-center">
         <label
           htmlFor={inputUploadId}
           className="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500"
@@ -72,7 +72,7 @@ export default function UploadFile() {
         </label>
         <p className="pl-1">or drag and drop</p>
       </div>
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-slate-500 text-center">
         PNG, JPG, GIF up to 10MB
       </p>
     </form>

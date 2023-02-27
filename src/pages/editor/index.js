@@ -46,7 +46,7 @@ export default function Editor() {
           Unleash your creativity with your image
         </h1>
 
-        <section className="flex flex-col items-center p-2 bg-white border border-gray-200 rounded-lg sm:max-h-96 gap-2">
+        <section className="flex flex-col items-center p-2 bg-white border border-slate-200 rounded-lg sm:max-h-96 gap-2">
           <div className="flex flex-row justify-end w-full">
             <button onClick={handleResetImage}>
               <Close className="w-6 h-6 fill-slate-600" />
@@ -58,7 +58,7 @@ export default function Editor() {
               <CustomImage
                 src={editedImage || imageURL}
                 alt="Image to edit"
-                className="max-h-80 object-contain border border-gray-200 rounded-lg sm:mx-0 mx-auto"
+                className="max-h-80 object-contain border border-slate-200 rounded-lg sm:mx-0 mx-auto"
               />
             </section>
 
