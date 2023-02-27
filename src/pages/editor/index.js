@@ -10,7 +10,12 @@ import { Close } from '@/components/icons/Close'
 
 export default function Editor() {
   const { image, imageURL, resetData } = useImage()
-  const { editedImage, editedImageURL, handleOptimizeImage } = useEditImage({
+  const {
+    editedImage,
+    editedImageURL,
+    handleOptimizeImage,
+    handleRemoveBackground,
+  } = useEditImage({
     publicId: image.publicID,
   })
   const [section, setSection] = useState('edited')
@@ -59,21 +64,21 @@ export default function Editor() {
               <div className="flex w-full gap-4 mb-2">
                 <button
                   onClick={() => setSection('original')}
-                  className={`${
+                  className={`font-medium border-b-2 ${
                     section === 'original'
                       ? 'text-indigo-800 border-indigo-800'
-                      : 'text-slate-500'
-                  } font-medium border-b-2 border-transparent`}
+                      : 'text-slate-500 border-transparent'
+                  }`}
                 >
                   Original
                 </button>
                 <button
                   onClick={() => setSection('edited')}
-                  className={`${
+                  className={`font-medium border-b-2 ${
                     section === 'edited'
                       ? 'text-indigo-800 border-indigo-800'
-                      : 'text-slate-500'
-                  } font-medium border-b-2 border-transparent`}
+                      : 'text-slate-500 border-transparent'
+                  }`}
                 >
                   Edited
                 </button>
@@ -91,6 +96,13 @@ export default function Editor() {
                 className="bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg"
               >
                 Optimize image
+              </button>
+
+              <button
+                onClick={handleRemoveBackground}
+                className="bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg mt-4"
+              >
+                Remove background
               </button>
             </section>
           </div>

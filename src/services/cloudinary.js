@@ -1,5 +1,6 @@
 import { Cloudinary } from '@cloudinary/url-gen'
 import { quality } from '@cloudinary/url-gen/actions/delivery'
+import { backgroundRemoval } from '@cloudinary/url-gen/actions/effect'
 import { v4 as uuidv4 } from 'uuid'
 
 import { UPLOAD_URL } from '@/constants'
@@ -42,4 +43,10 @@ export const optimizeImage = (image, qualityImg) => {
   const optimizedImage = image.delivery(quality(qualityImg))
 
   return optimizedImage
+}
+
+export const removeBackground = image => {
+  const editedImage = image.effect(backgroundRemoval())
+
+  return editedImage
 }

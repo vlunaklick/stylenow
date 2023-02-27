@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { getImage, optimizeImage } from '@/services/cloudinary'
+import {
+  getImage,
+  optimizeImage,
+  removeBackground,
+} from '@/services/cloudinary'
 
 export function useEditImage({ publicId }) {
   const [image, setImage] = useState(null)
@@ -25,5 +29,25 @@ export function useEditImage({ publicId }) {
     setImage(url)
   }
 
-  return { editedImage: image, editedImageURL: imageURL, handleOptimizeImage }
+  const handleRemoveBackground = async () => {
+    const url = removeBackground(image)
+
+    const interval = setInterval(async () => {
+      const res = await fetch(url.toURL())
+
+      console.log(res.status)
+
+      if (res.status === 200) {
+        clearInterval(interval)
+        setImageURL(url.toURL())
+      }
+    }, 1500)
+  }
+
+  return {
+    editedImage: image,
+    editedImageURL: imageURL,
+    handleOptimizeImage,
+    handleRemoveBackground,
+  }
 }
