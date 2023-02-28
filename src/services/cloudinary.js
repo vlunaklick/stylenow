@@ -33,8 +33,8 @@ export const uploadImage = async file => {
   return data
 }
 
-export const getImage = publicID => {
-  const image = cloudinary.image(publicID)
+export const getImage = publicId => {
+  const image = cloudinary.image(publicId)
 
   return image
 }

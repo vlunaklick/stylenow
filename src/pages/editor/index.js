@@ -47,7 +47,7 @@ export default function Editor() {
       <main className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 min-h-[calc(100vh-52px-86px)]">
         <h1 className="text-4xl font-bold text-center max-w-lg mx-auto text-slate-800 mt-10">
           Unleash your
-          <span className="to-indigo-400 from-indigo-800 text-transparent bg-gradient-to-t bg-clip-text">
+          <span className="to-indigo-300 from-indigo-400 text-transparent bg-gradient-to-t bg-clip-text">
             {' '}
             creativity{' '}
           </span>
@@ -92,14 +92,14 @@ export default function Editor() {
 
             <section className="flex flex-col items-center justify-center">
               <button
-                onClick={handleOptimizeImage}
+                onClick={() => handleOptimizeImage()}
                 className="bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg"
               >
                 Optimize image
               </button>
 
               <button
-                onClick={handleRemoveBackground}
+                onClick={() => handleRemoveBackground()}
                 className="bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg mt-4"
               >
                 Remove background
