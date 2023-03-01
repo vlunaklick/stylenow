@@ -68,7 +68,7 @@ export function useDropzone() {
 
     const file = e.target.files[0]
 
-    if (file.types && !file.types.includes('image/*')) {
+    if (file.type && !file.type.includes('image/*')) {
       setError('Only images are allowed')
       setDropzoneState(DROP_ZONE_STATE.ERROR)
       return

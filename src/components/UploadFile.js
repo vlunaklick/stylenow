@@ -61,8 +61,7 @@ export default function UploadFile() {
       className={
         'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] min-h-[200px] p-4 border-2 border-dashed rounded-md bg-white ' +
         (isDragActive ? 'border-indigo-500' : 'border-slate-200') +
-        (isUploading ? ' opacity-50 pointer-events-none' : '') +
-        (isError ? ' border-red-500' : '')
+        (isUploading ? ' opacity-50 pointer-events-none' : '')
       }
     >
       <label htmlFor="file-upload" className="sr-only">
