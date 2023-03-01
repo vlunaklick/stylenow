@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react'
 
-import { getImage, optimizeImage, grayScaleImage } from '@/services/cloudinary'
+import {
+  getImage,
+  optimizeImage,
+  grayScaleImage,
+  sepiaImage,
+  blurImage,
+} from '@/services/cloudinary'
 import { unifyEffects, getEffects } from '@/helpers/urlParser'
 
 const editsApplied = {
   optimize: '',
   grayscale: '',
+  sepia: '',
+  blur: '',
 }
 
 export function useEditImage({ publicId }) {
@@ -65,11 +73,39 @@ export function useEditImage({ publicId }) {
     setLastestEdits(prevState => [...prevState, 'grayscale'])
   }
 
+  const handleSepiaImage = () => {
+    if (edits.sepia !== '') return
+
+    const editedImageURL = sepiaImage(publicId, 80)
+
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
+
+    setImageURL(unifyEffectsURL)
+
+    setEdits({ ...edits, sepia: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'sepia'])
+  }
+
+  const handleBlurImage = () => {
+    if (edits.blur !== '') return
+
+    const editedImageURL = blurImage(publicId, 1000)
+
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
+
+    setImageURL(unifyEffectsURL)
+
+    setEdits({ ...edits, blur: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'blur'])
+  }
+
   return {
     editedImageURL: imageURL,
     handleResetImage,
     handleUndoImage,
     handleOptimizeImage,
     handleGrayScaleImage,
+    handleSepiaImage,
+    handleBlurImage,
   }
 }
