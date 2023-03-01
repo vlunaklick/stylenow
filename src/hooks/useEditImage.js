@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import { getImage, optimizeImage, grayScaleImage } from '@/services/cloudinary'
-
 import { unifyEffects, getEffects } from '@/helpers/urlParser'
 
 const editsApplied = {
@@ -25,6 +24,7 @@ export function useEditImage({ publicId }) {
 
     setImageURL(image.toURL())
     setEdits(editsApplied)
+    setLastestEdits([])
   }
 
   const handleUndoImage = () => {

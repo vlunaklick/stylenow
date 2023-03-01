@@ -8,3 +8,10 @@ export const TEST_URLS = {
   landscape:
     'https://res.cloudinary.com/djzg2tf6o/image/upload/v1677107271/landscape_jpdqiv.jpg',
 }
+
+export const KEYS_STORAGE = {
+  PUBLIC_ID: 'publicId',
+  EDITS: 'edits',
+  LASTEST_EDITS: 'lastestEdits',
+  LAST_IMAGE_URL: 'lastImageURL',
+}
