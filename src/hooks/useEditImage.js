@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react'
 
 import { getImage, optimizeImage, grayScaleImage } from '@/services/cloudinary'
 
-import { unifyEffects } from '@/helpers/urlParser'
+import { unifyEffects, getEffects } from '@/helpers/urlParser'
 
 const editsApplied = {
-  optimize: false,
-  grayscale: false,
+  optimize: '',
+  grayscale: '',
 }
 
 export function useEditImage({ publicId }) {
   const [imageURL, setImageURL] = useState(null)
   const [edits, setEdits] = useState(editsApplied)
+  const [lastestEdits, setLastestEdits] = useState([])
 
   useEffect(() => {
     const image = getImage(publicId)
@@ -26,8 +27,20 @@ export function useEditImage({ publicId }) {
     setEdits(editsApplied)
   }
 
+  const handleUndoImage = () => {
+    const lastestEdit = lastestEdits.pop()
+
+    const effect = edits[lastestEdit]
+
+    const removeEffectURL = imageURL.replace(effect, '')
+
+    setImageURL(removeEffectURL)
+
+    setEdits({ ...edits, [lastestEdit]: '' })
+  }
+
   const handleOptimizeImage = () => {
-    if (edits.optimize) return
+    if (edits.optimize !== '') return
 
     const editedImageURL = optimizeImage(publicId, 'auto:good')
 
@@ -35,11 +48,12 @@ export function useEditImage({ publicId }) {
 
     setImageURL(unifyEffectsURL)
 
-    setEdits({ ...edits, optimize: true })
+    setEdits({ ...edits, optimize: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'optimize'])
   }
 
   const handleGrayScaleImage = () => {
-    if (edits.grayscale) return
+    if (edits.grayscale !== '') return
 
     const editedImageURL = grayScaleImage(publicId)
 
@@ -47,12 +61,14 @@ export function useEditImage({ publicId }) {
 
     setImageURL(unifyEffectsURL)
 
-    setEdits({ ...edits, grayscale: true })
+    setEdits({ ...edits, grayscale: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'grayscale'])
   }
 
   return {
     editedImageURL: imageURL,
     handleResetImage,
+    handleUndoImage,
     handleOptimizeImage,
     handleGrayScaleImage,
   }

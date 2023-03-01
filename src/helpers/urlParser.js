@@ -14,7 +14,7 @@ export const unifyEffects = (currentUrl, newInfo) => {
   return newUrl
 }
 
-function getEffects(url) {
+export const getEffects = url => {
   const start = url.indexOf('upload')
 
   if (start === -1) {

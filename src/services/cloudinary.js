@@ -1,9 +1,9 @@
 import { Cloudinary } from '@cloudinary/url-gen'
 import { quality } from '@cloudinary/url-gen/actions/delivery'
-import { backgroundRemoval } from '@cloudinary/url-gen/actions/effect'
 import { v4 as uuidv4 } from 'uuid'
 
 import { UPLOAD_URL } from '@/constants'
+import { grayscale } from '@cloudinary/url-gen/actions/effect'
 
 const cloudinary = new Cloudinary({
   cloud: {
@@ -39,14 +39,18 @@ export const getImage = publicId => {
   return image
 }
 
-export const optimizeImage = (image, qualityImg) => {
-  const optimizedImage = image.delivery(quality(qualityImg))
+export const optimizeImage = (publicId, qualityImg) => {
+  const image = cloudinary.image(publicId)
 
-  return optimizedImage
+  image.delivery(quality(qualityImg))
+
+  return image.toURL()
 }
 
-export const removeBackground = image => {
-  const editedImage = image.effect(backgroundRemoval())
+export const grayScaleImage = publicId => {
+  const image = cloudinary.image(publicId)
 
-  return editedImage
+  image.effect(grayscale())
+
+  return image.toURL()
 }
