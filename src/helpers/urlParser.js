@@ -3,7 +3,7 @@ export const unifyEffects = (currentUrl, newInfo) => {
   const newEffects = getEffects(newInfo)
 
   const start = currentUrl.indexOf('upload')
-  const end = currentUrl.lastIndexOf('/')
+  const end = currentUrl.lastIndexOf('/v1')
 
   const newUrl =
     currentUrl.substring(0, start + 6) +
@@ -21,7 +21,7 @@ export const getEffects = url => {
     return ''
   }
 
-  const end = url.lastIndexOf('/')
+  const end = url.lastIndexOf('/v1')
 
   if (end === -1) {
     return ''

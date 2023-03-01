@@ -11,9 +11,9 @@ export default function ClickToTry() {
 
   const { handlePublicId } = useImage()
 
-  const handleUploadImage = src => {
-    const publicID = src.split('/').pop().split('.')[0]
-    handlePublicId(publicID)
+  const handleUploadImage = publicId => {
+    handlePublicId(publicId)
+
     navigateToEditor()
   }
 
@@ -23,20 +23,20 @@ export default function ClickToTry() {
 
       <div className="flex flex-row flex-wrap gap-4 justify-center w-full h-full mt-5">
         <TestImage
-          onClick={() => handleUploadImage(TEST_URLS.gaming)}
-          imgSrc={TEST_URLS.gaming}
+          onClick={() => handleUploadImage(TEST_URLS.gaming.publicId)}
+          imgSrc={TEST_URLS.gaming.url}
           imgAlt="Test Image Gaming"
         />
 
         <TestImage
-          onClick={() => handleUploadImage(TEST_URLS.dogs)}
-          imgSrc={TEST_URLS.dogs}
+          onClick={() => handleUploadImage(TEST_URLS.dogs.publicId)}
+          imgSrc={TEST_URLS.dogs.url}
           imgAlt="Test Image Dogs"
         />
 
         <TestImage
-          onClick={() => handleUploadImage(TEST_URLS.landscape)}
-          imgSrc={TEST_URLS.landscape}
+          onClick={() => handleUploadImage(TEST_URLS.landscape.publicId)}
+          imgSrc={TEST_URLS.landscape.url}
           imgAlt="Test Image Landscape"
         />
       </div>

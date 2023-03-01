@@ -41,11 +41,13 @@ export const uploadImage = async file => {
 
   const data = await res.json()
 
+  console.log(data)
+
   return data
 }
 
 export const getImage = publicId => {
-  const image = cloudinary.image(publicId)
+  const image = cloudinary.image(`${publicId}`)
 
   return image
 }
