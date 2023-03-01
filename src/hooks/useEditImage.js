@@ -1,95 +1,59 @@
 import { useEffect, useState } from 'react'
 
-import {
-  getImage,
-  optimizeImage,
-  removeBackground,
-} from '@/services/cloudinary'
+import { getImage, optimizeImage, grayScaleImage } from '@/services/cloudinary'
+
+import { unifyEffects } from '@/helpers/urlParser'
 
 const editsApplied = {
   optimize: false,
-  removeBackground: false,
+  grayscale: false,
 }
 
 export function useEditImage({ publicId }) {
-  const [image, setImage] = useState(null)
   const [imageURL, setImageURL] = useState(null)
   const [edits, setEdits] = useState(editsApplied)
 
   useEffect(() => {
-    const fetchImage = async () => {
-      const editedImage = await getImage(publicId)
+    const image = getImage(publicId)
 
-      setImage(editedImage)
-      setImageURL(editedImage.toURL())
-    }
-
-    if (publicId) {
-      fetchImage()
-    }
+    setImageURL(image.toURL())
   }, [publicId])
 
-  useEffect(() => {
-    if (image) {
-      const interval = setInterval(async () => {
-        const res = await fetch(image.toURL())
+  const handleResetImage = () => {
+    const image = getImage(publicId)
 
-        if (res.status === 200) {
-          setImageURL(image.toURL())
-          clearInterval(interval)
-        }
-      }, 1000)
+    setImageURL(image.toURL())
+    setEdits(editsApplied)
+  }
 
-      return () => clearInterval(interval)
-    }
-  }, [image, edits])
-
-  const handleOptimizeImage = async () => {
+  const handleOptimizeImage = () => {
     if (edits.optimize) return
 
-    const editedImage = optimizeImage(image, 80)
+    const editedImageURL = optimizeImage(publicId, 'auto:good')
 
-    setImage(editedImage)
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
 
-    const interval = setInterval(async () => {
-      const res = await fetch(editedImage.toURL())
-
-      if (res.status === 200) {
-        setImageURL(editedImage.toURL())
-        clearInterval(interval)
-      }
-    }, 1000)
+    setImageURL(unifyEffectsURL)
 
     setEdits({ ...edits, optimize: true })
   }
 
-  const handleRemoveBackground = async () => {
-    if (edits.removeBackground) return
+  const handleGrayScaleImage = () => {
+    if (edits.grayscale) return
 
-    const imageWithout = await getImage(publicId)
+    const editedImageURL = grayScaleImage(publicId)
 
-    const editedImage = removeBackground(imageWithout)
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
 
-    edits.optimize ? optimizeImage(editedImage, 80) : editedImage
+    setImageURL(unifyEffectsURL)
 
-    setImage(editedImage)
-
-    const interval = setInterval(async () => {
-      const res = await fetch(editedImage.toURL())
-
-      if (res.status === 200) {
-        setImageURL(editedImage.toURL())
-        clearInterval(interval)
-      }
-    }, 1000)
-
-    setEdits({ ...edits, removeBackground: true })
+    setEdits({ ...edits, grayscale: true })
   }
 
   return {
-    editedImage: image,
     editedImageURL: imageURL,
+    handleResetImage,
     handleOptimizeImage,
-    handleRemoveBackground,
+    handleGrayScaleImage,
   }
 }
