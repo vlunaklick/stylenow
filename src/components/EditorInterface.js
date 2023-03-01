@@ -5,10 +5,13 @@ import {
   MdSettingsBackupRestore,
   MdClose,
   MdHighQuality,
+  MdBlurOn,
+  MdTrendingUp,
 } from 'react-icons/md'
 
 import { useImage } from '@/context/Image'
 import { useEditImage } from '@/hooks/useEditImage'
+import { useInput } from '@/hooks/useInput'
 
 import CustomImage from './CustomImage'
 import EditorButton from './EditorButton'
@@ -16,6 +19,9 @@ import EditorButton from './EditorButton'
 export default function EditorInterface() {
   const [section, setSection] = useState('edited')
   const { image, imageURL, resetData } = useImage()
+  const { value: blurValue, onChange: handleBlurChange } = useInput({
+    initialValue: 500,
+  })
 
   const {
     editedImageURL,
@@ -25,6 +31,7 @@ export default function EditorInterface() {
     handleGrayScaleImage,
     handleBlurImage,
     handleSepiaImage,
+    handleImproveQualityImage,
   } = useEditImage({
     publicId: image.publicID,
   })
@@ -33,8 +40,8 @@ export default function EditorInterface() {
 
   return (
     <>
-      <section className="flex flex-col items-center p-4 bg-white border border-slate-200 rounded-lg gap-4">
-        <div className="flex justify-between items-center w-full">
+      <div className="flex flex-col items-center p-4 bg-white border border-slate-200 rounded-lg gap-4">
+        <section className="flex justify-between items-center w-full">
           <div className="flex w-full gap-4">
             <button
               onClick={() => setSection('original')}
@@ -61,15 +68,16 @@ export default function EditorInterface() {
           <button onClick={resetData}>
             <MdClose className="w-6 h-6 text-slate-400 hover:text-slate-500 transition-colors" />
           </button>
-        </div>
+        </section>
 
-        <section className="flex justify-center w-full gap-4 flex-col sm:flex-row">
+        <section className="flex justify-center w-full gap-4 flex-col min-[750px]:flex-row">
           <CustomImage
             src={imageToDisplay}
             alt={section === 'edited' ? 'Edited image' : 'Original image'}
-            className="max-h-80 object-contain border border-slate-200 rounded-lg mx-auto max-w-md"
+            className="max-h-80 object-contain border border-slate-200 rounded-lg mx-auto max-w-md w-full h-min"
           />
-          <section className="flex w-full gap-2 flex-wrap h-min">
+
+          <div className="flex gap-2 flex-wrap h-min">
             <EditorButton onClick={handleResetImage}>
               <span className="flex items-center gap-1 font-medium px-1">
                 <MdOutlineRestartAlt className="text-2xl" />
@@ -86,16 +94,35 @@ export default function EditorInterface() {
 
             <EditorButton onClick={handleOptimizeImage}>
               <span className="flex items-center gap-1 font-medium px-1">
-                <MdHighQuality className="text-2xl" />
+                <MdTrendingUp className="text-2xl" />
                 Optimize
               </span>
             </EditorButton>
 
-            <EditorButton onClick={handleBlurImage}>
+            <EditorButton onClick={handleImproveQualityImage}>
               <span className="flex items-center gap-1 font-medium px-1">
-                Blur
+                <MdHighQuality className="text-2xl" />
+                Improve
               </span>
             </EditorButton>
+
+            <div className="flex items-center gap-2 w-full flex-wrap sm:flex-nowrap">
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                step="1"
+                value={blurValue}
+                onChange={handleBlurChange}
+                className="w-full"
+              />
+              <EditorButton onClick={() => handleBlurImage(blurValue)}>
+                <span className="flex items-center gap-1 font-medium px-1">
+                  <MdBlurOn className="text-2xl" />
+                  Blur
+                </span>
+              </EditorButton>
+            </div>
 
             <EditorButton onClick={handleGrayScaleImage}>
               <span className="flex items-center gap-1 font-medium px-1">
@@ -108,9 +135,9 @@ export default function EditorInterface() {
                 Sepia
               </span>
             </EditorButton>
-          </section>
+          </div>
         </section>
-      </section>
+      </div>
 
       <a
         href={editedImageURL || imageURL}

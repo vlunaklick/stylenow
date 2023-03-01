@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from 'uuid'
 import {
   grayscale,
   pixelate,
-  improve,
   blur,
   colorize,
   sharpen,
   sepia,
   opacity,
 } from '@cloudinary/url-gen/actions/effect'
+import { improve } from '@cloudinary/url-gen/actions/adjust'
 import { crop } from '@cloudinary/url-gen/actions/resize'
 
 import { UPLOAD_URL } from '@/constants'

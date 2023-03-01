@@ -6,6 +6,7 @@ import {
   grayScaleImage,
   sepiaImage,
   blurImage,
+  improveQuality,
 } from '@/services/cloudinary'
 import { unifyEffects, getEffects } from '@/helpers/urlParser'
 
@@ -14,6 +15,7 @@ const editsApplied = {
   grayscale: '',
   sepia: '',
   blur: '',
+  improveQuality: '',
 }
 
 export function useEditImage({ publicId }) {
@@ -86,10 +88,10 @@ export function useEditImage({ publicId }) {
     setLastestEdits(prevState => [...prevState, 'sepia'])
   }
 
-  const handleBlurImage = () => {
+  const handleBlurImage = value => {
     if (edits.blur !== '') return
 
-    const editedImageURL = blurImage(publicId, 1000)
+    const editedImageURL = blurImage(publicId, value)
 
     const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
 
@@ -97,6 +99,19 @@ export function useEditImage({ publicId }) {
 
     setEdits({ ...edits, blur: getEffects(editedImageURL) })
     setLastestEdits(prevState => [...prevState, 'blur'])
+  }
+
+  const handleImproveQualityImage = () => {
+    if (edits.improveQuality !== '') return
+
+    const editedImageURL = improveQuality(publicId)
+
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
+
+    setImageURL(unifyEffectsURL)
+
+    setEdits({ ...edits, improveQuality: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'improveQuality'])
   }
 
   return {
@@ -107,5 +122,6 @@ export function useEditImage({ publicId }) {
     handleGrayScaleImage,
     handleSepiaImage,
     handleBlurImage,
+    handleImproveQualityImage,
   }
 }
