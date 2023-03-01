@@ -13,6 +13,7 @@ export default function EditorInterface() {
   const {
     editedImageURL,
     handleResetImage,
+    handleUndoImage,
     handleOptimizeImage,
     handleGrayScaleImage,
   } = useEditImage({
@@ -65,6 +66,13 @@ export default function EditorInterface() {
               className="bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg w-min mx-auto"
             >
               Reset
+            </button>
+
+            <button
+              onClick={handleUndoImage}
+              className="bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg w-min mx-auto"
+            >
+              Undo
             </button>
 
             <button
