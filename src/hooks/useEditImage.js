@@ -9,6 +9,7 @@ import {
   improveQuality,
   colorizeImage,
   changeBrightness,
+  removeBg,
 } from '@/services/cloudinary'
 import { unifyEffects, getEffects } from '@/helpers/urlParser'
 
@@ -20,6 +21,7 @@ const editsApplied = {
   improveQuality: '',
   colorize: '',
   brightness: '',
+  removeBg: '',
 }
 
 export function useEditImage({ publicId }) {
@@ -184,6 +186,19 @@ export function useEditImage({ publicId }) {
     setLastestEdits(prevState => [...prevState, 'brightness'])
   }
 
+  const handleRemoveBgImage = () => {
+    if (edits.removeBg !== '') return
+
+    const editedImageURL = removeBg(publicId)
+
+    const unifyEffectsURL = unifyEffects(editedImageURL, imageURL)
+
+    setImageURL(unifyEffectsURL)
+
+    setEdits({ ...edits, removeBg: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'removeBg'])
+  }
+
   return {
     editedImageURL: imageURL,
     handleResetImage,
@@ -195,5 +210,6 @@ export function useEditImage({ publicId }) {
     handleImproveQualityImage,
     handleColorizeImage,
     handleBrightnessImage,
+    handleRemoveBgImage,
   }
 }

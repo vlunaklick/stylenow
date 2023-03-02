@@ -12,13 +12,14 @@ import {
   opacity,
 } from '@cloudinary/url-gen/actions/effect'
 import { improve, brightness } from '@cloudinary/url-gen/actions/adjust'
+import { backgroundRemoval } from '@cloudinary/url-gen/actions/effect'
 import { crop } from '@cloudinary/url-gen/actions/resize'
 
 import { UPLOAD_URL } from '@/constants'
 
 const cloudinary = new Cloudinary({
   cloud: {
-    cloudName: 'djzg2tf6o',
+    cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   },
   url: {
     secure: true,
@@ -170,6 +171,14 @@ export const blurImage = (publicId, blurStrength = 100) => {
   const image = cloudinary.image(publicId)
 
   image.adjust(blur().strength(blurStrength))
+
+  return image.toURL()
+}
+
+export const removeBg = publicId => {
+  const image = cloudinary.image(publicId)
+
+  image.effect(backgroundRemoval())
 
   return image.toURL()
 }

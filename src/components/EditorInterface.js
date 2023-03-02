@@ -9,11 +9,12 @@ import {
   MdTrendingUp,
   MdColorize,
   MdOutlineBrightnessLow,
+  MdOutlineSettingsSystemDaydream,
 } from 'react-icons/md'
 
 import { useImage } from '@/context/Image'
-import { useEditImage } from '@/hooks/useEditImage'
 import { useInput } from '@/hooks/useInput'
+import { useEditImage } from '@/hooks/useEditImage'
 
 import CustomImage from './CustomImage'
 import EditorButton from './EditorButton'
@@ -29,7 +30,7 @@ export default function EditorInterface() {
   })
   const { value: brightnessValue, onChange: handleBrightnessChange } = useInput(
     {
-      initialValue: 50,
+      initialValue: 0,
     }
   )
 
@@ -44,6 +45,7 @@ export default function EditorInterface() {
     handleImproveQualityImage,
     handleColorizeImage,
     handleBrightnessImage,
+    handleRemoveBgImage,
   } = useEditImage({
     publicId: image.publicID,
   })
@@ -118,18 +120,23 @@ export default function EditorInterface() {
               </span>
             </EditorButton>
 
-            <div className="flex items-center gap-2 w-full flex-wrap sm:flex-nowrap">
+            <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
               <div className="flex items-center gap-2 w-full">
                 <input
                   type="range"
                   min="0"
-                  max="1000"
+                  max="2000"
+                  step={100}
                   value={blurValue}
                   onChange={handleBlurChange}
-                  className="w-full"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
                 />
 
-                <p className="text-slate-500 font-medium">{blurValue}</p>
+                <div className="flex items-center justify-center gap-1 max-w-[37px] w-full">
+                  <span className="font-medium text-slate-500">
+                    {blurValue}
+                  </span>
+                </div>
               </div>
 
               <EditorButton onClick={() => handleBlurImage(blurValue)}>
@@ -152,12 +159,12 @@ export default function EditorInterface() {
               </span>
             </EditorButton>
 
-            <div className="flex items-center gap-2 w-full flex-wrap sm:flex-nowrap">
+            <div className="flex items-center gap-2 w-full">
               <input
                 type="color"
                 value={colorizeValue}
                 onChange={handleColorizeChange}
-                className="w-full"
+                className="w-full p-1 h-9"
               />
 
               <EditorButton
@@ -170,18 +177,23 @@ export default function EditorInterface() {
               </EditorButton>
             </div>
 
-            <div className="flex items-center gap-2 w-full flex-wrap sm:flex-nowrap">
+            <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
               <div className="flex items-center gap-2 w-full">
                 <input
                   type="range"
-                  min="0"
+                  min="-99"
                   max="100"
+                  step={10}
                   value={brightnessValue}
                   onChange={handleBrightnessChange}
-                  className="w-full"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
                 />
 
-                <p className="text-slate-500 font-medium">{brightnessValue}</p>
+                <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
+                  <span className="font-medium text-slate-500">
+                    {brightnessValue}
+                  </span>
+                </div>
               </div>
 
               <EditorButton
@@ -193,6 +205,16 @@ export default function EditorInterface() {
                 </span>
               </EditorButton>
             </div>
+
+            {
+              // TODO: Open it before the hackathon
+              // <EditorButton onClick={handleRemoveBgImage}>
+              //   <span className="flex items-center gap-1 font-medium px-1">
+              //     <MdOutlineSettingsSystemDaydream className="text-2xl" />
+              //     Remove BG
+              //   </span>
+              // </EditorButton>
+            }
           </div>
         </section>
       </div>
