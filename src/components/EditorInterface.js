@@ -7,6 +7,8 @@ import {
   MdHighQuality,
   MdBlurOn,
   MdTrendingUp,
+  MdColorize,
+  MdOutlineBrightnessLow,
 } from 'react-icons/md'
 
 import { useImage } from '@/context/Image'
@@ -22,6 +24,14 @@ export default function EditorInterface() {
   const { value: blurValue, onChange: handleBlurChange } = useInput({
     initialValue: 500,
   })
+  const { value: colorizeValue, onChange: handleColorizeChange } = useInput({
+    initialValue: '#0099ff',
+  })
+  const { value: brightnessValue, onChange: handleBrightnessChange } = useInput(
+    {
+      initialValue: 50,
+    }
+  )
 
   const {
     editedImageURL,
@@ -32,6 +42,8 @@ export default function EditorInterface() {
     handleBlurImage,
     handleSepiaImage,
     handleImproveQualityImage,
+    handleColorizeImage,
+    handleBrightnessImage,
   } = useEditImage({
     publicId: image.publicID,
   })
@@ -107,15 +119,19 @@ export default function EditorInterface() {
             </EditorButton>
 
             <div className="flex items-center gap-2 w-full flex-wrap sm:flex-nowrap">
-              <input
-                type="range"
-                min="0"
-                max="1000"
-                step="1"
-                value={blurValue}
-                onChange={handleBlurChange}
-                className="w-full"
-              />
+              <div className="flex items-center gap-2 w-full">
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  value={blurValue}
+                  onChange={handleBlurChange}
+                  className="w-full"
+                />
+
+                <p className="text-slate-500 font-medium">{blurValue}</p>
+              </div>
+
               <EditorButton onClick={() => handleBlurImage(blurValue)}>
                 <span className="flex items-center gap-1 font-medium px-1">
                   <MdBlurOn className="text-2xl" />
@@ -135,6 +151,48 @@ export default function EditorInterface() {
                 Sepia
               </span>
             </EditorButton>
+
+            <div className="flex items-center gap-2 w-full flex-wrap sm:flex-nowrap">
+              <input
+                type="color"
+                value={colorizeValue}
+                onChange={handleColorizeChange}
+                className="w-full"
+              />
+
+              <EditorButton
+                onClick={() => handleColorizeImage(50, colorizeValue)}
+              >
+                <span className="flex items-center gap-1 font-medium px-1">
+                  <MdColorize className="text-2xl" />
+                  Colorize
+                </span>
+              </EditorButton>
+            </div>
+
+            <div className="flex items-center gap-2 w-full flex-wrap sm:flex-nowrap">
+              <div className="flex items-center gap-2 w-full">
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={brightnessValue}
+                  onChange={handleBrightnessChange}
+                  className="w-full"
+                />
+
+                <p className="text-slate-500 font-medium">{brightnessValue}</p>
+              </div>
+
+              <EditorButton
+                onClick={() => handleBrightnessImage(brightnessValue)}
+              >
+                <span className="flex items-center gap-1 font-medium px-1">
+                  <MdOutlineBrightnessLow className="text-2xl" />
+                  Brightness
+                </span>
+              </EditorButton>
+            </div>
           </div>
         </section>
       </div>

@@ -11,7 +11,7 @@ import {
   sepia,
   opacity,
 } from '@cloudinary/url-gen/actions/effect'
-import { improve } from '@cloudinary/url-gen/actions/adjust'
+import { improve, brightness } from '@cloudinary/url-gen/actions/adjust'
 import { crop } from '@cloudinary/url-gen/actions/resize'
 
 import { UPLOAD_URL } from '@/constants'

@@ -7,6 +7,8 @@ import {
   sepiaImage,
   blurImage,
   improveQuality,
+  colorizeImage,
+  changeBrightness,
 } from '@/services/cloudinary'
 import { unifyEffects, getEffects } from '@/helpers/urlParser'
 
@@ -16,6 +18,8 @@ const editsApplied = {
   sepia: '',
   blur: '',
   improveQuality: '',
+  colorize: '',
+  brightness: '',
 }
 
 export function useEditImage({ publicId }) {
@@ -127,6 +131,59 @@ export function useEditImage({ publicId }) {
     setLastestEdits(prevState => [...prevState, 'improveQuality'])
   }
 
+  const handleColorizeImage = (intensity, colorType) => {
+    const editedImageURL = colorizeImage(publicId, intensity, colorType)
+
+    if (edits.colorize === getEffects(editedImageURL)) return
+
+    if (edits.colorize !== '') {
+      const removeEffectURL = imageURL.replace(edits.colorize, '')
+
+      setImageURL(unifyEffects(removeEffectURL, editedImageURL))
+
+      setEdits({ ...edits, colorize: getEffects(editedImageURL) })
+      setLastestEdits(prevState => [
+        ...prevState.filter(effect => effect !== 'colorize'),
+        'colorize',
+      ])
+      return
+    }
+
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
+
+    setImageURL(unifyEffectsURL)
+
+    setEdits({ ...edits, colorize: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'colorize'])
+  }
+
+  const handleBrightnessImage = value => {
+    const editedImageURL = changeBrightness(publicId, value)
+
+    if (edits.brightness === getEffects(editedImageURL)) return
+
+    if (edits.brightness !== '') {
+      const removeEffectURL = imageURL.replace(edits.brightness, '')
+
+      setImageURL(unifyEffects(removeEffectURL, editedImageURL))
+
+      setEdits({ ...edits, brightness: getEffects(editedImageURL) })
+      setLastestEdits(prevState => [
+        ...prevState.filter(effect => effect !== 'brightness'),
+        'brightness',
+      ])
+
+      return
+    }
+
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
+
+    setImageURL(unifyEffectsURL)
+
+    setEdits({ ...edits, brightness: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'brightness'])
+  }
+
   return {
     editedImageURL: imageURL,
     handleResetImage,
@@ -136,5 +193,7 @@ export function useEditImage({ publicId }) {
     handleSepiaImage,
     handleBlurImage,
     handleImproveQualityImage,
+    handleColorizeImage,
+    handleBrightnessImage,
   }
 }
