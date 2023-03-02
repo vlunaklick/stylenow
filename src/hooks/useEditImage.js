@@ -89,9 +89,22 @@ export function useEditImage({ publicId }) {
   }
 
   const handleBlurImage = value => {
-    if (edits.blur !== '') return
-
     const editedImageURL = blurImage(publicId, value)
+
+    if (edits.blur === getEffects(editedImageURL)) return
+
+    if (edits.blur !== '') {
+      const removeEffectURL = imageURL.replace(edits.blur, '')
+
+      setImageURL(unifyEffects(removeEffectURL, editedImageURL))
+
+      setEdits({ ...edits, blur: getEffects(editedImageURL) })
+      setLastestEdits(prevState => [
+        ...prevState.filter(effect => effect !== 'blur'),
+        'blur',
+      ])
+      return
+    }
 
     const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
 
