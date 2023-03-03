@@ -193,10 +193,18 @@ export function useEditImage({ publicId }) {
 
     const unifyEffectsURL = unifyEffects(editedImageURL, imageURL)
 
-    setImageURL(unifyEffectsURL)
+    const interval = setInterval(async () => {
+      const image = await fetch(unifyEffectsURL)
 
-    setEdits({ ...edits, removeBg: getEffects(editedImageURL) })
-    setLastestEdits(prevState => [...prevState, 'removeBg'])
+      if (image.status === 200) {
+        setImageURL(unifyEffectsURL)
+
+        setEdits({ ...edits, removeBg: getEffects(editedImageURL) })
+        setLastestEdits(prevState => [...prevState, 'removeBg'])
+
+        clearInterval(interval)
+      }
+    }, 1000)
   }
 
   return {

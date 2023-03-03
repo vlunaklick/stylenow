@@ -11,7 +11,8 @@ export default function CustomImage({ src, className, ...args }) {
     img.onload = () => setLoading(false)
   }, [src])
 
-  const placeholder = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3C/svg%3E`
+  const placeholder =
+    'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"%3E%3C/svg%3E'
 
   return (
     <>

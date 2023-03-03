@@ -28,12 +28,12 @@ export default function Editor() {
 
       <main className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 min-h-[calc(100vh-52px-86px)]">
         <h1 className="text-4xl font-bold text-center max-w-lg mx-auto text-slate-800 mt-10">
-          Unleash your
+          Visualize your
           <span className="to-indigo-300 from-indigo-400 text-transparent bg-gradient-to-t bg-clip-text">
             {' '}
-            creativity{' '}
+            perfect image{' '}
           </span>
-          with your image
+          instantly
         </h1>
 
         <EditorInterface />
