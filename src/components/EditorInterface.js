@@ -106,7 +106,7 @@ export default function EditorInterface() {
             src={imageToDisplay}
             alt={section === 'edited' ? 'Edited image' : 'Original image'}
             className={
-              'max-h-80 object-contain border border-slate-200 rounded-lg mx-auto max-w-md h-min min-[750px]:mx-0' +
+              'max-h-80 object-contain border border-slate-200 rounded-lg mx-auto max-w-md w-full h-min min-[750px]:mx-0' +
               (isImageLoading
                 ? ' filter brightness-50 animate-pulse bg-slate-800'
                 : '')
