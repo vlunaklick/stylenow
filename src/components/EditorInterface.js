@@ -6,7 +6,7 @@ import {
   MdClose,
   MdHighQuality,
   MdBlurOn,
-  MdTrendingUp,
+  MdCompress,
   MdColorize,
   MdOutlineBrightnessLow,
   MdOutlineSettingsSystemDaydream,
@@ -18,6 +18,7 @@ import { useInput } from '@/hooks/useInput'
 import { useEditImage } from '@/hooks/useEditImage'
 
 import CustomImage from './CustomImage'
+import EditorFilter from './EditorFilter'
 import EditorButton from './EditorButton'
 
 export default function EditorInterface() {
@@ -54,6 +55,7 @@ export default function EditorInterface() {
     handleBrightnessImage,
     handleRemoveBgImage,
     handleHueImage,
+    handlePixelateImage,
   } = useEditImage({
     publicId: image.publicID,
   })
@@ -71,7 +73,7 @@ export default function EditorInterface() {
 
   return (
     <>
-      <div className="flex flex-col items-center p-4 bg-white border border-slate-200 rounded-lg gap-4 min-h-[420px] ">
+      <div className="flex flex-col items-center p-4 bg-white border border-slate-200 rounded-lg gap-4 min-h-80">
         <section className="flex justify-between items-center w-full">
           <div className="flex w-full gap-4">
             <button
@@ -102,16 +104,23 @@ export default function EditorInterface() {
         </section>
 
         <section className="flex justify-between w-full gap-4 flex-col min-[750px]:flex-row">
-          <CustomImage
-            src={imageToDisplay}
-            alt={section === 'edited' ? 'Edited image' : 'Original image'}
+          <div
             className={
-              'max-h-80 object-contain border border-slate-200 rounded-lg mx-auto max-w-md w-full h-min min-[750px]:mx-0' +
-              (isImageLoading
-                ? ' filter brightness-50 animate-pulse bg-slate-800'
-                : '')
+              'max-h-80 mx-auto max-w-md h-min min-[750px]:mx-0 flex items-center justify-center rounded-lg relative'
             }
-          />
+          >
+            <CustomImage
+              src={imageToDisplay}
+              alt={section === 'edited' ? 'Edited image' : 'Original image'}
+              className="max-h-80 max-w-md border border-slate-200 rounded-lg w-full min-[750px]:w-auto"
+            />
+
+            {isImageLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-slate-900/70 rounded-lg">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-slate-400"></div>
+              </div>
+            )}
+          </div>
 
           <div className="flex gap-2 flex-wrap h-min w-full">
             <div className="flex gap-2 w-full flex-wrap">
@@ -130,205 +139,181 @@ export default function EditorInterface() {
               </EditorButton>
             </div>
 
-            <div className="flex gap-2 w-full flex-col">
-              <EditorButton
-                variant="primary"
-                onClick={() => handleCategory('filters')}
-              >
+            <EditorFilter
+              name="Filters"
+              categorySelected={category}
+              category="filters"
+              handleCategory={handleCategory}
+            >
+              <EditorButton variant="secondary" onClick={handleGrayScaleImage}>
                 <span className="flex items-center gap-1 font-medium px-1">
-                  Filters
+                  <MdColorize className="text-2xl" />
+                  Grayscale
                 </span>
               </EditorButton>
 
-              {category === 'filters' && (
+              <EditorButton variant="secondary" onClick={handleSepiaImage}>
+                <span className="flex items-center gap-1 font-medium px-1">
+                  <MdBlurOn className="text-2xl" />
+                  Sepia
+                </span>
+              </EditorButton>
+
+              <EditorButton variant="secondary" onClick={handlePixelateImage}>
+                <span className="flex items-center gap-1 font-medium px-1">
+                  Pixelate
+                </span>
+              </EditorButton>
+
+              <div className="flex items-center gap-2 w-full">
+                <input
+                  type="color"
+                  value={colorizeValue}
+                  onChange={handleColorizeChange}
+                  className="w-full p-1 h-9"
+                />
+
+                <EditorButton
+                  variant="secondary"
+                  onClick={() => handleColorizeImage(50, colorizeValue)}
+                >
+                  <span className="flex items-center gap-1 font-medium px-1">
+                    <MdColorize className="text-2xl" />
+                    Colorize
+                  </span>
+                </EditorButton>
+              </div>
+            </EditorFilter>
+
+            <EditorFilter
+              name="Adjustments"
+              categorySelected={category}
+              category="adjustments"
+              handleCategory={handleCategory}
+            >
+              <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
                 <div className="flex items-center gap-2 w-full">
-                  <EditorButton
-                    variant="secondary"
-                    onClick={handleGrayScaleImage}
-                  >
-                    <span className="flex items-center gap-1 font-medium px-1">
-                      <MdColorize className="text-2xl" />
-                      Grayscale
-                    </span>
-                  </EditorButton>
+                  <input
+                    type="range"
+                    min="0"
+                    max="2000"
+                    step={100}
+                    value={blurValue}
+                    onChange={handleBlurChange}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
+                  />
 
-                  <EditorButton variant="secondary" onClick={handleSepiaImage}>
-                    <span className="flex items-center gap-1 font-medium px-1">
-                      <MdBlurOn className="text-2xl" />
-                      Sepia
+                  <div className="flex items-center justify-center gap-1 max-w-[37px] w-full">
+                    <span className="font-medium text-slate-500">
+                      {blurValue}
                     </span>
-                  </EditorButton>
+                  </div>
                 </div>
-              )}
-            </div>
 
-            <div className="flex gap-2 w-full flex-col">
-              <EditorButton
-                variant="primary"
-                onClick={() => handleCategory('adjustments')}
-              >
+                <EditorButton
+                  variant="secondary"
+                  onClick={() => handleBlurImage(blurValue)}
+                >
+                  <span className="flex items-center gap-1 font-medium px-1">
+                    <MdBlurOn className="text-2xl" />
+                    Blur
+                  </span>
+                </EditorButton>
+              </div>
+
+              <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
+                <div className="flex items-center gap-2 w-full">
+                  <input
+                    type="range"
+                    min="-99"
+                    max="100"
+                    step={10}
+                    value={brightnessValue}
+                    onChange={handleBrightnessChange}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
+                  />
+
+                  <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
+                    <span className="font-medium text-slate-500">
+                      {brightnessValue}
+                    </span>
+                  </div>
+                </div>
+
+                <EditorButton
+                  variant="secondary"
+                  onClick={() => handleBrightnessImage(brightnessValue)}
+                >
+                  <span className="flex items-center gap-1 font-medium px-1">
+                    <MdOutlineBrightnessLow className="text-2xl" />
+                    Brightness
+                  </span>
+                </EditorButton>
+              </div>
+
+              <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
+                <div className="flex items-center gap-2 w-full">
+                  <input
+                    type="range"
+                    min="-100"
+                    max="100"
+                    step={10}
+                    value={hueValue}
+                    onChange={handleHueChange}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
+                  />
+
+                  <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
+                    <span className="font-medium text-slate-500">
+                      {hueValue}
+                    </span>
+                  </div>
+                </div>
+
+                <EditorButton
+                  variant="secondary"
+                  onClick={() => handleHueImage(hueValue)}
+                >
+                  <span className="flex items-center gap-1 font-medium px-1">
+                    Hue
+                  </span>
+                </EditorButton>
+              </div>
+            </EditorFilter>
+
+            <EditorFilter
+              name="Add-ons"
+              categorySelected={category}
+              category="addons"
+              handleCategory={handleCategory}
+            >
+              <EditorButton variant="secondary" onClick={handleOptimizeImage}>
                 <span className="flex items-center gap-1 font-medium px-1">
-                  Adjustments
+                  <MdCompress className="text-2xl" />
+                  Compress
                 </span>
               </EditorButton>
 
-              {category === 'adjustments' && (
-                <div className="flex items-center gap-2 w-full flex-wrap">
-                  <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
-                    <div className="flex items-center gap-2 w-full">
-                      <input
-                        type="range"
-                        min="0"
-                        max="2000"
-                        step={100}
-                        value={blurValue}
-                        onChange={handleBlurChange}
-                        className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
-                      />
-
-                      <div className="flex items-center justify-center gap-1 max-w-[37px] w-full">
-                        <span className="font-medium text-slate-500">
-                          {blurValue}
-                        </span>
-                      </div>
-                    </div>
-
-                    <EditorButton
-                      variant="secondary"
-                      onClick={() => handleBlurImage(blurValue)}
-                    >
-                      <span className="flex items-center gap-1 font-medium px-1">
-                        <MdBlurOn className="text-2xl" />
-                        Blur
-                      </span>
-                    </EditorButton>
-                  </div>
-
-                  <div className="flex items-center gap-2 w-full">
-                    <input
-                      type="color"
-                      value={colorizeValue}
-                      onChange={handleColorizeChange}
-                      className="w-full p-1 h-9"
-                    />
-
-                    <EditorButton
-                      variant="secondary"
-                      onClick={() => handleColorizeImage(50, colorizeValue)}
-                    >
-                      <span className="flex items-center gap-1 font-medium px-1">
-                        <MdColorize className="text-2xl" />
-                        Colorize
-                      </span>
-                    </EditorButton>
-                  </div>
-
-                  <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
-                    <div className="flex items-center gap-2 w-full">
-                      <input
-                        type="range"
-                        min="-99"
-                        max="100"
-                        step={10}
-                        value={brightnessValue}
-                        onChange={handleBrightnessChange}
-                        className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
-                      />
-
-                      <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
-                        <span className="font-medium text-slate-500">
-                          {brightnessValue}
-                        </span>
-                      </div>
-                    </div>
-
-                    <EditorButton
-                      variant="secondary"
-                      onClick={() => handleBrightnessImage(brightnessValue)}
-                    >
-                      <span className="flex items-center gap-1 font-medium px-1">
-                        <MdOutlineBrightnessLow className="text-2xl" />
-                        Brightness
-                      </span>
-                    </EditorButton>
-                  </div>
-
-                  <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
-                    <div className="flex items-center gap-2 w-full">
-                      <input
-                        type="range"
-                        min="-100"
-                        max="100"
-                        step={10}
-                        value={hueValue}
-                        onChange={handleHueChange}
-                        className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
-                      />
-
-                      <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
-                        <span className="font-medium text-slate-500">
-                          {hueValue}
-                        </span>
-                      </div>
-                    </div>
-
-                    <EditorButton
-                      variant="secondary"
-                      onClick={() => handleHueImage(hueValue)}
-                    >
-                      <span className="flex items-center gap-1 font-medium px-1">
-                        Hue
-                      </span>
-                    </EditorButton>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="flex gap-2 w-full flex-col">
               <EditorButton
-                variant="primary"
-                onClick={() => handleCategory('addons')}
+                variant="secondary"
+                onClick={handleImproveQualityImage}
               >
                 <span className="flex items-center gap-1 font-medium px-1">
-                  Addons
+                  <MdHighQuality className="text-2xl" />
+                  Improve
                 </span>
               </EditorButton>
 
-              {category === 'addons' && (
-                <div className="flex items-center gap-2 w-full flex-wrap">
-                  <EditorButton
-                    variant="secondary"
-                    onClick={handleOptimizeImage}
-                  >
-                    <span className="flex items-center gap-1 font-medium px-1">
-                      <MdTrendingUp className="text-2xl" />
-                      Optimize
-                    </span>
-                  </EditorButton>
-
-                  <EditorButton
-                    variant="secondary"
-                    onClick={handleImproveQualityImage}
-                  >
-                    <span className="flex items-center gap-1 font-medium px-1">
-                      <MdHighQuality className="text-2xl" />
-                      Improve
-                    </span>
-                  </EditorButton>
-
-                  {
-                    // TODO: Open it before the hackathon
-                    // <EditorButton variant="secondary" onClick={handleRemoveBgImage}>
-                    //   <span className="flex items-center gap-1 font-medium px-1">
-                    //     <MdOutlineSettingsSystemDaydream className="text-2xl" />
-                    //     Remove BG
-                    //   </span>
-                    // </EditorButton>
-                  }
-                </div>
-              )}
-            </div>
+              {
+                // TODO: Open it before the hackathon
+                // <EditorButton variant="secondary" onClick={handleRemoveBgImage}>
+                //   <span className="flex items-center gap-1 font-medium px-1">
+                //     <MdOutlineSettingsSystemDaydream className="text-2xl" />
+                //     Background Removal
+                //   </span>
+                // </EditorButton>
+              }
+            </EditorFilter>
           </div>
         </section>
       </div>

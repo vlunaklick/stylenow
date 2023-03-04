@@ -180,3 +180,11 @@ export const removeBg = publicId => {
 
   return image.toURL()
 }
+
+export const pixelateImage = (publicId, pixelateStrength = 100) => {
+  const image = cloudinary.image(publicId)
+
+  image.adjust(pixelate().squareSize(pixelateStrength))
+
+  return image.toURL()
+}

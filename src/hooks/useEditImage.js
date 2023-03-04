@@ -11,6 +11,7 @@ import {
   changeBrightness,
   removeBg,
   hueImage,
+  pixelateImage,
 } from '@/services/cloudinary'
 import { unifyEffects, getEffects } from '@/helpers/urlParser'
 
@@ -24,6 +25,7 @@ const editsApplied = {
   brightness: '',
   removeBg: '',
   hue: '',
+  pixelate: '',
 }
 
 export function useEditImage({ publicId }) {
@@ -214,6 +216,8 @@ export function useEditImage({ publicId }) {
 
     const unifyEffectsURL = unifyEffects(editedImageURL, imageURL)
 
+    setIsImageLoading(true)
+
     const interval = setInterval(async () => {
       const image = await fetch(unifyEffectsURL)
 
@@ -222,6 +226,8 @@ export function useEditImage({ publicId }) {
 
         setEdits({ ...edits, removeBg: getEffects(editedImageURL) })
         setLastestEdits(prevState => [...prevState, 'removeBg'])
+
+        setIsImageLoading(false)
 
         clearInterval(interval)
       }
@@ -255,6 +261,19 @@ export function useEditImage({ publicId }) {
     setLastestEdits(prevState => [...prevState, 'hue'])
   }
 
+  const handlePixelateImage = () => {
+    if (edits.pixelate !== '') return
+
+    const editedImageURL = pixelateImage(publicId, 15)
+
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
+
+    setImageURL(unifyEffectsURL)
+
+    setEdits({ ...edits, pixelate: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'pixelate'])
+  }
+
   return {
     editedImageURL: imageURL,
     isImageLoading,
@@ -269,5 +288,6 @@ export function useEditImage({ publicId }) {
     handleBrightnessImage,
     handleRemoveBgImage,
     handleHueImage,
+    handlePixelateImage,
   }
 }
