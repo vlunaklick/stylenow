@@ -37,16 +37,17 @@ export function useEditImage({ publicId }) {
 
     setIsImageLoading(true)
 
-    const interval = setInterval(async () => {
-      const image = new Image()
+    const image = new Image()
 
-      image.src = imageURL
+    image.src = imageURL
 
-      image.onload = () => {
-        setIsImageLoading(false)
-        clearInterval(interval)
-      }
-    }, 1000)
+    image.onload = () => {
+      setIsImageLoading(false)
+    }
+
+    return () => {
+      image.onload = null
+    }
   }, [imageURL, publicId])
 
   useEffect(() => {
