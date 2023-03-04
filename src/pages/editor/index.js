@@ -23,7 +23,7 @@ export default function Editor() {
   return (
     <>
       <Head>
-        <title>Cropnow - Editor</title>
+        <title>StyleNow - Editor</title>
       </Head>
 
       <main className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 min-h-[calc(100vh-52px-86px)]">

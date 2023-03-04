@@ -7,13 +7,13 @@ export default function Header() {
       <header className="max-w-3xl mx-auto py-2 px-4 flex justify-between items-center">
         <h1 className="text-3xl font-bold text-slate-800 w-fit transition-transform hover:scale-105">
           <Link href="/">
-            crop
+            style
             <span className="text-indigo-500 text-xl">now</span>
           </Link>
         </h1>
 
         <Link
-          href="https://github.com/vlunaklick/cropnow"
+          href="https://github.com/vlunaklick/stylenow"
           className="text-sm font-medium hover:bg-indigo-600 transition-colors bg-indigo-500 px-2 py-1 rounded hidden min-[280px]:flex"
           target="_blank"
           rel="noopener noreferrer"

@@ -14,8 +14,11 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Cropnow</title>
-        <meta name="description" content="Cropnow" />
+        <title>StyleNow</title>
+        <meta
+          name="description"
+          content="Transform your photos into art with StyleNow - the easy and fast online image editor. Try it for free now!"
+        />
       </Head>
 
       <ImageProvider>
