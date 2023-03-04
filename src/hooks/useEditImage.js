@@ -10,6 +10,7 @@ import {
   colorizeImage,
   changeBrightness,
   removeBg,
+  hueImage,
 } from '@/services/cloudinary'
 import { unifyEffects, getEffects } from '@/helpers/urlParser'
 
@@ -22,12 +23,31 @@ const editsApplied = {
   colorize: '',
   brightness: '',
   removeBg: '',
+  hue: '',
 }
 
 export function useEditImage({ publicId }) {
   const [imageURL, setImageURL] = useState(null)
   const [edits, setEdits] = useState(editsApplied)
   const [lastestEdits, setLastestEdits] = useState([])
+  const [isImageLoading, setIsImageLoading] = useState(true)
+
+  useEffect(() => {
+    if (!imageURL) return
+
+    setIsImageLoading(true)
+
+    const interval = setInterval(async () => {
+      const image = new Image()
+
+      image.src = imageURL
+
+      image.onload = () => {
+        setIsImageLoading(false)
+        clearInterval(interval)
+      }
+    }, 1000)
+  }, [imageURL, publicId])
 
   useEffect(() => {
     const image = getImage(publicId)
@@ -207,8 +227,36 @@ export function useEditImage({ publicId }) {
     }, 1000)
   }
 
+  const handleHueImage = value => {
+    const editedImageURL = hueImage(publicId, value)
+
+    if (edits.hue === getEffects(editedImageURL)) return
+
+    if (edits.hue !== '') {
+      const removeEffectURL = imageURL.replace(edits.hue, '')
+
+      setImageURL(unifyEffects(removeEffectURL, editedImageURL))
+
+      setEdits({ ...edits, hue: getEffects(editedImageURL) })
+      setLastestEdits(prevState => [
+        ...prevState.filter(effect => effect !== 'hue'),
+        'hue',
+      ])
+
+      return
+    }
+
+    const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
+
+    setImageURL(unifyEffectsURL)
+
+    setEdits({ ...edits, hue: getEffects(editedImageURL) })
+    setLastestEdits(prevState => [...prevState, 'hue'])
+  }
+
   return {
     editedImageURL: imageURL,
+    isImageLoading,
     handleResetImage,
     handleUndoImage,
     handleOptimizeImage,
@@ -219,5 +267,6 @@ export function useEditImage({ publicId }) {
     handleColorizeImage,
     handleBrightnessImage,
     handleRemoveBgImage,
+    handleHueImage,
   }
 }

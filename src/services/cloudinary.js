@@ -11,7 +11,7 @@ import {
   sepia,
   opacity,
 } from '@cloudinary/url-gen/actions/effect'
-import { improve, brightness } from '@cloudinary/url-gen/actions/adjust'
+import { improve, brightness, hue } from '@cloudinary/url-gen/actions/adjust'
 import { backgroundRemoval } from '@cloudinary/url-gen/actions/effect'
 import { crop } from '@cloudinary/url-gen/actions/resize'
 

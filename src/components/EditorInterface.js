@@ -33,9 +33,13 @@ export default function EditorInterface() {
       initialValue: 0,
     }
   )
+  const { value: hueValue, onChange: handleHueChange } = useInput({
+    initialValue: 0,
+  })
 
   const {
     editedImageURL,
+    isImageLoading,
     handleResetImage,
     handleUndoImage,
     handleOptimizeImage,
@@ -46,6 +50,7 @@ export default function EditorInterface() {
     handleColorizeImage,
     handleBrightnessImage,
     handleRemoveBgImage,
+    handleHueImage,
   } = useEditImage({
     publicId: image.publicID,
   })
@@ -88,7 +93,12 @@ export default function EditorInterface() {
           <CustomImage
             src={imageToDisplay}
             alt={section === 'edited' ? 'Edited image' : 'Original image'}
-            className="max-h-80 object-contain border border-slate-200 rounded-lg mx-auto max-w-md w-full h-min"
+            className={
+              'max-h-80 object-contain border border-slate-200 rounded-lg mx-auto max-w-md w-full h-min' +
+              (isImageLoading
+                ? ' filter brightness-50 animate-pulse bg-slate-800'
+                : '')
+            }
           />
 
           <div className="flex gap-2 flex-wrap h-min">
@@ -202,6 +212,30 @@ export default function EditorInterface() {
                 <span className="flex items-center gap-1 font-medium px-1">
                   <MdOutlineBrightnessLow className="text-2xl" />
                   Brightness
+                </span>
+              </EditorButton>
+            </div>
+
+            <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
+              <div className="flex items-center gap-2 w-full">
+                <input
+                  type="range"
+                  min="-100"
+                  max="100"
+                  step={10}
+                  value={hueValue}
+                  onChange={handleHueChange}
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
+                />
+
+                <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
+                  <span className="font-medium text-slate-500">{hueValue}</span>
+                </div>
+              </div>
+
+              <EditorButton onClick={() => handleHueImage(hueValue)}>
+                <span className="flex items-center gap-1 font-medium px-1">
+                  Hue
                 </span>
               </EditorButton>
             </div>
