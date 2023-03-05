@@ -38,15 +38,19 @@ export default function EditorInterface() {
   const { value: hueValue, onChange: handleHueChange } = useInput({
     initialValue: 0,
   })
+  const { value: compressValue, onChange: handleCompressChange } = useInput({
+    initialValue: 'auto:good',
+  })
 
   const [category, setCategory] = useState('')
 
   const {
     editedImageURL,
     isImageLoading,
+    fileSize,
     handleResetImage,
     handleUndoImage,
-    handleOptimizeImage,
+    handleCompressImage,
     handleGrayScaleImage,
     handleBlurImage,
     handleSepiaImage,
@@ -120,6 +124,12 @@ export default function EditorInterface() {
                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-slate-400"></div>
               </div>
             )}
+
+            <div className="absolute bottom-0 right-0 flex items-center gap-2 p-2 bg-white rounded-tl-lg">
+              <span className="text-xs text-slate-500">
+                {fileSize ? `${fileSize} KB` : '0 KB'}
+              </span>
+            </div>
           </div>
 
           <div className="flex gap-2 flex-wrap h-min w-full">
@@ -287,12 +297,27 @@ export default function EditorInterface() {
               category="addons"
               handleCategory={handleCategory}
             >
-              <EditorButton variant="secondary" onClick={handleOptimizeImage}>
-                <span className="flex items-center gap-1 font-medium px-1">
-                  <MdCompress className="text-2xl" />
-                  Compress
-                </span>
-              </EditorButton>
+              <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
+                <select
+                  onChange={handleCompressChange}
+                  className="border-2 border-slate-200 text-slate-500 rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                >
+                  <option value="auto:good">Good</option>
+                  <option value="auto:best">Best</option>
+                  <option value="auto:eco">Eco</option>
+                  <option value="auto:low">Low</option>
+                </select>
+
+                <EditorButton
+                  variant="secondary"
+                  onClick={() => handleCompressImage(compressValue)}
+                >
+                  <span className="flex items-center gap-1 font-medium px-1">
+                    <MdOutlineSettingsSystemDaydream className="text-2xl" />
+                    Compress
+                  </span>
+                </EditorButton>
+              </div>
 
               <EditorButton
                 variant="secondary"

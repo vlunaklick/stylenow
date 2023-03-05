@@ -51,7 +51,7 @@ export const getImage = publicId => {
   return image
 }
 
-export const optimizeImage = (publicId, qualityImg) => {
+export const compressImage = (publicId, qualityImg) => {
   const image = cloudinary.image(publicId)
 
   image.delivery(quality(qualityImg))

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import {
   getImage,
-  optimizeImage,
+  compressImage,
   grayScaleImage,
   sepiaImage,
   blurImage,
@@ -14,6 +14,7 @@ import {
   pixelateImage,
 } from '@/services/cloudinary'
 import { unifyEffects, getEffects } from '@/helpers/urlParser'
+import { getImageFileSize } from '@/utils'
 
 const editsApplied = {
   optimize: '',
@@ -33,6 +34,7 @@ export function useEditImage({ publicId }) {
   const [edits, setEdits] = useState(editsApplied)
   const [lastestEdits, setLastestEdits] = useState([])
   const [isImageLoading, setIsImageLoading] = useState(true)
+  const [fileSize, setFileSize] = useState(0)
 
   useEffect(() => {
     if (!imageURL) return
@@ -45,6 +47,10 @@ export function useEditImage({ publicId }) {
 
     image.onload = () => {
       setIsImageLoading(false)
+
+      getImageFileSize(image).then(size => {
+        setFileSize(size / 1000)
+      })
     }
 
     return () => {
@@ -78,10 +84,21 @@ export function useEditImage({ publicId }) {
     setEdits({ ...edits, [lastestEdit]: '' })
   }
 
-  const handleOptimizeImage = () => {
-    if (edits.optimize !== '') return
+  const handleCompressImage = value => {
+    const editedImageURL = compressImage(publicId, value)
 
-    const editedImageURL = optimizeImage(publicId, 'auto:good')
+    if (edits.optimize === getEffects(editedImageURL)) return
+
+    if (edits.optimize !== '') {
+      const removeEffectURL = imageURL.replace(edits.optimize, '')
+
+      const unifyEffectsURL = unifyEffects(removeEffectURL, editedImageURL)
+
+      setImageURL(unifyEffectsURL)
+
+      setEdits({ ...edits, optimize: getEffects(editedImageURL) })
+      return
+    }
 
     const unifyEffectsURL = unifyEffects(imageURL, editedImageURL)
 
@@ -277,9 +294,10 @@ export function useEditImage({ publicId }) {
   return {
     editedImageURL: imageURL,
     isImageLoading,
+    fileSize,
     handleResetImage,
     handleUndoImage,
-    handleOptimizeImage,
+    handleCompressImage,
     handleGrayScaleImage,
     handleSepiaImage,
     handleBlurImage,

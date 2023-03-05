@@ -1,5 +1,6 @@
-export const convertToImageSrc = async file => {
-  const src = URL.createObjectURL(file)
+export const getImageFileSize = async file => {
+  const blob = await fetch(file.src).then(r => r.blob())
+  const { size } = blob
 
-  return src
+  return size
 }
