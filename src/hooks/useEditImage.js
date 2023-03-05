@@ -85,7 +85,9 @@ export function useEditImage({ publicId }) {
   }
 
   const handleQualityImage = value => {
-    if (edits.optimize !== '' && value === 'auto:default') {
+    if (value === 'auto:default') {
+      if (edits.optimize === '') return
+
       const editedImageURL = imageURL.replace(edits.optimize, '')
 
       setImageURL(editedImageURL)
