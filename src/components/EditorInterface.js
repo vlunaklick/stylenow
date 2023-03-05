@@ -12,6 +12,8 @@ import {
   MdOutlineSettingsSystemDaydream,
 } from 'react-icons/md'
 
+import { ImSpinner } from 'react-icons/im'
+
 import { useImage } from '@/context/Image'
 import { useInput } from '@/hooks/useInput'
 import { useEditImage } from '@/hooks/useEditImage'
@@ -76,15 +78,15 @@ export default function EditorInterface() {
 
   return (
     <>
-      <div className="flex flex-col items-center p-4 bg-white border border-slate-200 rounded-lg gap-4 min-h-80">
+      <div className="flex flex-col items-center p-4 bg-white border border-slate-200 rounded-lg gap-4 min-h-80 dark:bg-slate-900 dark:border-slate-800">
         <section className="flex justify-between items-center w-full">
           <div className="flex w-full gap-4">
             <button
               onClick={() => setSection('original')}
               className={`font-medium border-b-2 ${
                 section === 'original'
-                  ? 'text-indigo-800 border-indigo-800'
-                  : 'text-slate-500 border-transparent'
+                  ? 'text-indigo-800 border-indigo-800 dark:text-indigo-500 dark:border-indigo-500'
+                  : 'text-slate-500 border-transparent dark:text-slate-400'
               }`}
             >
               Original
@@ -93,8 +95,8 @@ export default function EditorInterface() {
               onClick={() => setSection('edited')}
               className={`font-medium border-b-2 ${
                 section === 'edited'
-                  ? 'text-indigo-800 border-indigo-800'
-                  : 'text-slate-500 border-transparent'
+                  ? 'text-indigo-800 border-indigo-800 dark:text-indigo-500 dark:border-indigo-500'
+                  : 'text-slate-500 border-transparent dark:text-slate-400'
               }`}
             >
               Edited
@@ -115,17 +117,17 @@ export default function EditorInterface() {
             <CustomImage
               src={imageToDisplay}
               alt={section === 'edited' ? 'Edited image' : 'Original image'}
-              className="max-h-80 max-w-md border border-slate-200 rounded-lg w-full min-[750px]:w-auto"
+              className="max-h-80 max-w-md border border-slate-200 rounded-lg w-full min-[750px]:w-auto dark:border-slate-800"
             />
 
             {isImageLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-slate-900/70 rounded-lg">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-slate-400"></div>
+              <div className="absolute inset-0 flex items-center justify-center bg-slate-900/70 rounded-lg dark:bg-slate-800/70">
+                <ImSpinner className="animate-spin text-white text-2xl" />
               </div>
             )}
 
-            <div className="absolute bottom-0 right-0 flex items-center gap-2 p-2 bg-white rounded-tl-lg">
-              <span className="text-xs text-slate-500">
+            <div className="absolute bottom-0 right-0 flex items-center gap-2 p-2 bg-white rounded-tl-lg dark:bg-slate-900 border-t border-l border-slate-200 dark:border-slate-800">
+              <span className="text-xs text-slate-500 dark:text-slate-400">
                 {section === 'edited'
                   ? `${editedFileSize} KB`
                   : `${originalFileSize} KB`}
@@ -211,7 +213,7 @@ export default function EditorInterface() {
                     step={100}
                     value={blurValue}
                     onChange={handleBlurChange}
-                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-800"
                   />
 
                   <div className="flex items-center justify-center gap-1 max-w-[37px] w-full">
@@ -241,7 +243,7 @@ export default function EditorInterface() {
                     step={10}
                     value={brightnessValue}
                     onChange={handleBrightnessChange}
-                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-800"
                   />
 
                   <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
@@ -271,7 +273,7 @@ export default function EditorInterface() {
                     step={10}
                     value={hueValue}
                     onChange={handleHueChange}
-                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-800"
                   />
 
                   <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
@@ -301,7 +303,7 @@ export default function EditorInterface() {
               <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
                 <select
                   onChange={handleQualityChange}
-                  className="border-2 border-slate-200 text-slate-500 rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                  className="border-2 border-slate-200 text-slate-500 rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:border-slate-800 dark:text-slate-300 dark:bg-slate-900 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option value="auto:default">Default</option>
                   <option value="auto:good">Good</option>

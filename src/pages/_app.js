@@ -7,6 +7,7 @@ import { ImageProvider } from '@/context/Image'
 import Header from '@/components/Header'
 import Head from 'next/head'
 import Footer from '@/components/Footer'
+import { ThemeProvider } from 'next-themes'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,13 +22,15 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
 
-      <ImageProvider>
-        <Header />
+      <ThemeProvider attribute="class">
+        <ImageProvider>
+          <Header />
 
-        <Component {...pageProps} />
+          <Component {...pageProps} />
 
-        <Footer />
-      </ImageProvider>
+          <Footer />
+        </ImageProvider>
+      </ThemeProvider>
       <style jsx global>{`
         body {
           font-family: ${inter.fontFamily}, system-ui, sans-serif;

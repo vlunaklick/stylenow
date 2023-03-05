@@ -27,7 +27,7 @@ export default function Editor() {
       </Head>
 
       <main className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 min-h-[calc(100vh-52px-86px)]">
-        <h1 className="text-4xl font-bold text-center max-w-lg mx-auto text-slate-800 mt-10">
+        <h1 className="text-4xl font-bold text-center max-w-lg mx-auto text-slate-800 mt-10 dark:text-slate-50">
           Visualize your
           <span className="to-indigo-300 from-indigo-400 text-transparent bg-gradient-to-t bg-clip-text">
             {' '}

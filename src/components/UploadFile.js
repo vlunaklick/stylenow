@@ -59,7 +59,7 @@ export default function UploadFile() {
       onDragOver={onDragEnter}
       onDrop={handleUploadFormOnDrop}
       className={
-        'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] min-h-[200px] p-4 border-2 border-dashed rounded-md bg-white ' +
+        'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] min-h-[200px] p-4 border-2 border-dashed rounded-md bg-white dark:bg-slate-900 dark:border-slate-800 ' +
         (isDragActive ? 'border-indigo-500' : 'border-slate-200') +
         (isUploading ? ' opacity-50 pointer-events-none' : '')
       }
@@ -75,14 +75,17 @@ export default function UploadFile() {
       />
       <Upload
         className={
-          'w-12 h-12 ' + (isDragActive ? 'fill-indigo-700' : 'fill-slate-600')
+          'w-12 h-12 ' +
+          (isDragActive
+            ? 'fill-indigo-700 dark:fill-indigo-500'
+            : 'fill-slate-500 dark:fill-slate-400')
         }
       />
-      <div className="flex text-sm text-slate-600 flex-wrap justify-center">
+      <div className="flex text-sm text-slate-600 flex-wrap justify-center dark:text-slate-500">
         <label
           htmlFor={inputUploadId}
           className={
-            'relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500' +
+            'relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 ' +
             (isError ? ' text-red-500 hover:text-red-400' : '')
           }
         >
@@ -97,7 +100,7 @@ export default function UploadFile() {
         </label>
         <p className="pl-1">or drag and drop</p>
       </div>
-      <p className="text-xs text-slate-500 text-center">
+      <p className="text-xs text-slate-500 text-center dark:text-slate-400">
         PNG, JPG, GIF up to 10MB
       </p>
     </form>

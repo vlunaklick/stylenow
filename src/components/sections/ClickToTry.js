@@ -19,7 +19,9 @@ export default function ClickToTry() {
 
   return (
     <section className="flex flex-col justify-center w-full h-full px-4">
-      <h1 className="text-2xl font-semibold text-slate-800">Click to try</h1>
+      <h1 className="text-2xl font-semibold text-slate-800 dark:text-slate-50 w-fit">
+        Click to try
+      </h1>
 
       <div className="flex flex-row flex-wrap gap-4 justify-center w-full h-full mt-5">
         <TestImage

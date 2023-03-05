@@ -1,16 +1,20 @@
 import Link from 'next/link'
+
+import ButtonTheme from './ButtonTheme'
 import { GitHub } from './icons/GitHub'
 
 export default function Header() {
   return (
     <>
       <header className="max-w-3xl mx-auto py-2 px-4 flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-slate-800 w-fit transition-transform hover:scale-105">
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-50 w-fit transition-transform hover:scale-105">
           <Link href="/">
             style
             <span className="text-indigo-500 text-xl">now</span>
           </Link>
         </h1>
+
+        <ButtonTheme />
 
         <Link
           href="https://github.com/vlunaklick/stylenow"
