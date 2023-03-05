@@ -84,7 +84,19 @@ export function useEditImage({ publicId }) {
     setEdits({ ...edits, [lastestEdit]: '' })
   }
 
-  const handleCompressImage = value => {
+  const handleQualityImage = value => {
+    if (edits.optimize !== '' && value === 'auto:default') {
+      const editedImageURL = imageURL.replace(edits.optimize, '')
+
+      setImageURL(editedImageURL)
+
+      setEdits({ ...edits, optimize: '' })
+      setLastestEdits(prevState => [
+        ...prevState.filter(effect => effect !== 'optimize'),
+      ])
+      return
+    }
+
     const editedImageURL = compressImage(publicId, value)
 
     if (edits.optimize === getEffects(editedImageURL)) return
@@ -297,7 +309,7 @@ export function useEditImage({ publicId }) {
     fileSize,
     handleResetImage,
     handleUndoImage,
-    handleCompressImage,
+    handleQualityImage,
     handleGrayScaleImage,
     handleSepiaImage,
     handleBlurImage,

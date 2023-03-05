@@ -4,13 +4,12 @@ import {
   MdOutlineRestartAlt,
   MdSettingsBackupRestore,
   MdClose,
-  MdHighQuality,
+  MdOutlineHighQuality,
   MdBlurOn,
-  MdCompress,
   MdColorize,
   MdOutlineBrightnessLow,
-  MdOutlineSettingsSystemDaydream,
   MdCloudDownload,
+  MdOutlineSettingsSystemDaydream,
 } from 'react-icons/md'
 
 import { useImage } from '@/context/Image'
@@ -38,8 +37,8 @@ export default function EditorInterface() {
   const { value: hueValue, onChange: handleHueChange } = useInput({
     initialValue: 0,
   })
-  const { value: compressValue, onChange: handleCompressChange } = useInput({
-    initialValue: 'auto:good',
+  const { value: qualityValue, onChange: handleQualityChange } = useInput({
+    initialValue: 'auto:default',
   })
 
   const [category, setCategory] = useState('')
@@ -50,7 +49,7 @@ export default function EditorInterface() {
     fileSize: editedFileSize,
     handleResetImage,
     handleUndoImage,
-    handleCompressImage,
+    handleQualityImage,
     handleGrayScaleImage,
     handleBlurImage,
     handleSepiaImage,
@@ -301,9 +300,10 @@ export default function EditorInterface() {
             >
               <div className="flex items-center gap-2 w-full flex-wrap min-[370px]:flex-nowrap">
                 <select
-                  onChange={handleCompressChange}
+                  onChange={handleQualityChange}
                   className="border-2 border-slate-200 text-slate-500 rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
                 >
+                  <option value="auto:default">Default</option>
                   <option value="auto:good">Good</option>
                   <option value="auto:best">Best</option>
                   <option value="auto:eco">Eco</option>
@@ -312,11 +312,11 @@ export default function EditorInterface() {
 
                 <EditorButton
                   variant="secondary"
-                  onClick={() => handleCompressImage(compressValue)}
+                  onClick={() => handleQualityImage(qualityValue)}
                 >
                   <span className="flex items-center gap-1 font-medium px-1">
-                    <MdCompress className="text-2xl" />
-                    Compress
+                    <MdOutlineHighQuality className="text-2xl" />
+                    Quality
                   </span>
                 </EditorButton>
               </div>
@@ -326,20 +326,16 @@ export default function EditorInterface() {
                 onClick={handleImproveQualityImage}
               >
                 <span className="flex items-center gap-1 font-medium px-1">
-                  <MdHighQuality className="text-2xl" />
                   Improve
                 </span>
               </EditorButton>
 
-              {
-                // TODO: Open it before the hackathon
-                // <EditorButton variant="secondary" onClick={handleRemoveBgImage}>
-                //   <span className="flex items-center gap-1 font-medium px-1">
-                //     <MdOutlineSettingsSystemDaydream className="text-2xl" />
-                //     Background Removal
-                //   </span>
-                // </EditorButton>
-              }
+              <EditorButton variant="secondary" onClick={handleRemoveBgImage}>
+                <span className="flex items-center gap-1 font-medium px-1 w-full whitespace-nowrap">
+                  <MdOutlineSettingsSystemDaydream className="text-2xl" />
+                  Background Removal
+                </span>
+              </EditorButton>
             </EditorFilter>
           </div>
         </section>
