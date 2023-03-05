@@ -23,7 +23,7 @@ import EditorButton from './EditorButton'
 
 export default function EditorInterface() {
   const [section, setSection] = useState('edited')
-  const { image, imageURL, resetData } = useImage()
+  const { image, imageURL, resetData, fileSize: originalFileSize } = useImage()
   const { value: blurValue, onChange: handleBlurChange } = useInput({
     initialValue: 500,
   })
@@ -47,7 +47,7 @@ export default function EditorInterface() {
   const {
     editedImageURL,
     isImageLoading,
-    fileSize,
+    fileSize: editedFileSize,
     handleResetImage,
     handleUndoImage,
     handleCompressImage,
@@ -127,7 +127,9 @@ export default function EditorInterface() {
 
             <div className="absolute bottom-0 right-0 flex items-center gap-2 p-2 bg-white rounded-tl-lg">
               <span className="text-xs text-slate-500">
-                {fileSize ? `${fileSize} KB` : '0 KB'}
+                {section === 'edited'
+                  ? `${editedFileSize} KB`
+                  : `${originalFileSize} KB`}
               </span>
             </div>
           </div>
@@ -313,7 +315,7 @@ export default function EditorInterface() {
                   onClick={() => handleCompressImage(compressValue)}
                 >
                   <span className="flex items-center gap-1 font-medium px-1">
-                    <MdOutlineSettingsSystemDaydream className="text-2xl" />
+                    <MdCompress className="text-2xl" />
                     Compress
                   </span>
                 </EditorButton>

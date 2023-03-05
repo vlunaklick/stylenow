@@ -48,7 +48,7 @@ export function useEditImage({ publicId }) {
     image.onload = () => {
       setIsImageLoading(false)
 
-      getImageFileSize(image).then(size => {
+      getImageFileSize(imageURL).then(size => {
         setFileSize(size / 1000)
       })
     }

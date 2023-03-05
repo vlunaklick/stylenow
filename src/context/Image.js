@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 
 import { getImage } from '@/services/cloudinary'
+import { getImageFileSize } from '@/utils'
 
 const ImageContext = createContext()
 
@@ -8,6 +9,7 @@ const ImageProvider = ({ children }) => {
   const [publicId, setPublicId] = useState('')
   const [image, setImage] = useState('')
   const [imageURL, setImageURL] = useState('')
+  const [fileSize, setFileSize] = useState(0)
 
   useEffect(() => {
     if (publicId) {
@@ -15,6 +17,10 @@ const ImageProvider = ({ children }) => {
 
       setImage(image)
       setImageURL(image.toURL())
+
+      getImageFileSize(image.toURL()).then(size => {
+        setFileSize(size / 1000)
+      })
     }
   }, [publicId])
 
@@ -33,6 +39,7 @@ const ImageProvider = ({ children }) => {
       value={{
         image,
         imageURL,
+        fileSize,
         handlePublicId,
         resetData,
       }}

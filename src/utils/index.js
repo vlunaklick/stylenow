@@ -1,5 +1,5 @@
-export const getImageFileSize = async file => {
-  const blob = await fetch(file.src).then(r => r.blob())
+export const getImageFileSize = async src => {
+  const blob = await fetch(src).then(r => r.blob())
   const { size } = blob
 
   return size
