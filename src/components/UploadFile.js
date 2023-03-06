@@ -59,7 +59,7 @@ export default function UploadFile() {
       onDragOver={onDragEnter}
       onDrop={handleUploadFormOnDrop}
       className={
-        'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] min-h-[200px] p-4 border-2 border-dashed rounded-md bg-white dark:bg-slate-900 dark:border-slate-800 ' +
+        'flex flex-col items-center justify-center w-full h-full sm:min-w-[250px] min-h-[200px] p-4 border-2 border-dashed rounded-md bg-white/80 dark:bg-slate-900/80 dark:border-slate-800 ' +
         (isDragActive ? 'border-indigo-500' : 'border-slate-200') +
         (isUploading ? ' opacity-50 pointer-events-none' : '')
       }

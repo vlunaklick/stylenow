@@ -117,7 +117,7 @@ export default function EditorInterface() {
             <CustomImage
               src={imageToDisplay}
               alt={section === 'edited' ? 'Edited image' : 'Original image'}
-              className="max-h-80 max-w-md border border-slate-200 rounded-lg w-full min-[750px]:w-auto dark:border-slate-800"
+              className="max-h-80 max-w-md border border-slate-200 rounded-lg w-full min-[750px]:w-auto dark:border-slate-800 min-w-[100px] min-h-[100px]"
             />
 
             {isImageLoading && (
@@ -217,7 +217,7 @@ export default function EditorInterface() {
                   />
 
                   <div className="flex items-center justify-center gap-1 max-w-[37px] w-full">
-                    <span className="font-medium text-slate-500">
+                    <span className="font-medium text-slate-500 dark:text-slate-400">
                       {blurValue}
                     </span>
                   </div>
@@ -247,7 +247,7 @@ export default function EditorInterface() {
                   />
 
                   <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
-                    <span className="font-medium text-slate-500">
+                    <span className="font-medium text-slate-500 dark:text-slate-400">
                       {brightnessValue}
                     </span>
                   </div>
@@ -277,7 +277,7 @@ export default function EditorInterface() {
                   />
 
                   <div className="flex items-center justify-center gap-1 max-w-[28px] w-full">
-                    <span className="font-medium text-slate-500">
+                    <span className="font-medium text-slate-500 dark:text-slate-400">
                       {hueValue}
                     </span>
                   </div>
@@ -348,7 +348,7 @@ export default function EditorInterface() {
         download="edited-image.png"
         target={'_blank'}
         rel="noreferrer"
-        className="flex items-center justify-center gap-2 w-min mx-auto p-2 px-4 bg-slate-700 hover:bg-slate-800 transition-colors text-white rounded-lg font-medium"
+        className="flex items-center justify-center gap-2 w-min mx-auto p-2 px-4 bg-slate-700 hover:bg-slate-800 transition-colors text-white rounded-lg font-medium dark:bg-slate-800 dark:hover:bg-slate-700"
       >
         <MdCloudDownload className="text-xl" />
         Download

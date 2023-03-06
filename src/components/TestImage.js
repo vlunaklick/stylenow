@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 const buttonClass =
-  'w-full h-full border-2 border-slate-200 rounded-lg flex-1 min-w-[200px] group relative dark:border-slate-800 min-h-[130px]'
+  'w-full h-full border-2 border-slate-200 rounded-lg flex-1 min-w-[200px] group relative dark:border-slate-800 min-h-[130px] bg-white dark:bg-slate-900'
 
 const imagesClass = 'w-full object-cover rounded-md'
 

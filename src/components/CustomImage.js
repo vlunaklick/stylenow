@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 export default function CustomImage({ src, className, ...args }) {
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (!src) return
@@ -9,6 +10,11 @@ export default function CustomImage({ src, className, ...args }) {
     const img = new Image()
     img.src = src
     img.onload = () => setLoading(false)
+
+    img.onerror = () => {
+      setLoading(false)
+      setError(true)
+    }
   }, [src])
 
   const placeholder =
@@ -20,6 +26,8 @@ export default function CustomImage({ src, className, ...args }) {
         src={loading ? placeholder : src}
         className={
           loading
+            ? 'w-96 aspect-video bg-slate-300 animate-pulse rounded-lg mx-auto'
+            : error
             ? 'w-96 aspect-video bg-slate-300 animate-pulse rounded-lg mx-auto'
             : className
         }

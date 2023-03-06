@@ -69,3 +69,25 @@ html.dark {
   );
   filter: blur(125px);
 }
+
+.gradient-02 {
+  background: #7aebfb;
+  filter: blur(190px);
+}
+
+.gradient-03 {
+  background: rgba(149, 66, 232, 0.516);
+  filter: blur(175px);
+}
+
+.gradient-04 {
+  background: rgba(45, 72, 152, 0.75);
+  filter: blur(200px);
+  transform: rotate(-53.13deg);
+}
+
+.gradient-05 {
+  background: rgba(45, 72, 152, 0.75);
+  filter: blur(200px);
+  transform: rotate(53.13deg);
+}

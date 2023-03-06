@@ -18,7 +18,7 @@ export default function ClickToTry() {
   }
 
   return (
-    <section className="flex flex-col justify-center w-full h-full px-4">
+    <section className="flex flex-col justify-center w-full h-full px-4 relative">
       <h1 className="text-2xl font-semibold text-slate-800 dark:text-slate-50 w-fit">
         Click to try
       </h1>
@@ -42,6 +42,8 @@ export default function ClickToTry() {
           imgAlt="Test Image Landscape"
         />
       </div>
+
+      <div className="absolute w-[50%] gradient-02 -z-10 opacity-30 inset-0 hidden dark:block" />
     </section>
   )
 }
