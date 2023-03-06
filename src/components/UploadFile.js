@@ -78,7 +78,7 @@ export default function UploadFile() {
           'w-12 h-12 ' +
           (isDragActive
             ? 'fill-indigo-700 dark:fill-indigo-500'
-            : 'fill-slate-500 dark:fill-slate-400')
+            : 'fill-slate-700 dark:fill-slate-300')
         }
       />
       <div className="flex text-sm text-slate-600 flex-wrap justify-center dark:text-slate-500">

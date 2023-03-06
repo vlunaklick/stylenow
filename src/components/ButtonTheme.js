@@ -18,7 +18,7 @@ export default function ButtonTheme() {
     >
       <span className="sr-only">Change theme</span>
       <span className="text-gray-800 dark:text-gray-200 min-[400px]:text-base text-xs">
-        {theme === 'light' ? '🌚' : '🌞'}
+        {theme === 'light' ? '🌞' : '🌚'}
       </span>
     </button>
   )
