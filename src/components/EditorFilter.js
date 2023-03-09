@@ -14,9 +14,7 @@ export default function EditorFilter({
       </EditorButton>
 
       {categorySelected === category && (
-        <div className="flex items-center gap-2 w-full flex-wrap">
-          {children}
-        </div>
+        <div className="flex items-center gap-2 w-full flex-wrap">{children}</div>
       )}
     </div>
   )

@@ -8,6 +8,7 @@ export default function CustomImage({ src, className, ...args }) {
     if (!src) return
 
     const img = new Image()
+
     img.src = src
     img.onload = () => setLoading(false)
 
@@ -23,7 +24,6 @@ export default function CustomImage({ src, className, ...args }) {
   return (
     <>
       <img
-        src={loading ? placeholder : src}
         className={
           loading
             ? 'w-96 aspect-video bg-slate-300 animate-pulse rounded-lg mx-auto'
@@ -31,6 +31,7 @@ export default function CustomImage({ src, className, ...args }) {
             ? 'w-96 aspect-video bg-slate-300 animate-pulse rounded-lg mx-auto'
             : className
         }
+        src={loading ? placeholder : src}
         {...args}
       />
     </>

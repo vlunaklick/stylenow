@@ -93,9 +93,8 @@ export function useEditImage({ publicId }) {
       setImageURL(editedImageURL)
 
       setEdits({ ...edits, optimize: '' })
-      setLastestEdits(prevState => [
-        ...prevState.filter(effect => effect !== 'optimize'),
-      ])
+      setLastestEdits(prevState => [...prevState.filter(effect => effect !== 'optimize')])
+
       return
     }
 
@@ -111,6 +110,7 @@ export function useEditImage({ publicId }) {
       setImageURL(unifyEffectsURL)
 
       setEdits({ ...edits, optimize: getEffects(editedImageURL) })
+
       return
     }
 
@@ -159,10 +159,8 @@ export function useEditImage({ publicId }) {
       setImageURL(unifyEffects(removeEffectURL, editedImageURL))
 
       setEdits({ ...edits, blur: getEffects(editedImageURL) })
-      setLastestEdits(prevState => [
-        ...prevState.filter(effect => effect !== 'blur'),
-        'blur',
-      ])
+      setLastestEdits(prevState => [...prevState.filter(effect => effect !== 'blur'), 'blur'])
+
       return
     }
 
@@ -202,6 +200,7 @@ export function useEditImage({ publicId }) {
         ...prevState.filter(effect => effect !== 'colorize'),
         'colorize',
       ])
+
       return
     }
 
@@ -276,10 +275,7 @@ export function useEditImage({ publicId }) {
       setImageURL(unifyEffects(removeEffectURL, editedImageURL))
 
       setEdits({ ...edits, hue: getEffects(editedImageURL) })
-      setLastestEdits(prevState => [
-        ...prevState.filter(effect => effect !== 'hue'),
-        'hue',
-      ])
+      setLastestEdits(prevState => [...prevState.filter(effect => effect !== 'hue'), 'hue'])
 
       return
     }

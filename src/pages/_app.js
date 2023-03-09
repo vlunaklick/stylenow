@@ -2,12 +2,12 @@ import { Inter } from '@next/font/google'
 
 import '@/styles/globals.css'
 
-import { ImageProvider } from '@/context/Image'
-
-import Header from '@/components/Header'
 import Head from 'next/head'
-import Footer from '@/components/Footer'
 import { ThemeProvider } from 'next-themes'
+
+import { ImageProvider } from '@/context/Image'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,8 +17,8 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>StyleNow</title>
         <meta
-          name="description"
           content="Transform your photos into art with StyleNow - the easy and fast online image editor. Try it for free now!"
+          name="description"
         />
       </Head>
 
@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
           <Footer />
         </ImageProvider>
       </ThemeProvider>
-      <style jsx global>{`
+      <style global jsx>{`
         body {
           font-family: ${inter.fontFamily}, system-ui, sans-serif;
         }

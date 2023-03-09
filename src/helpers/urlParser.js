@@ -6,10 +6,7 @@ export const unifyEffects = (currentUrl, newInfo) => {
   const end = currentUrl.lastIndexOf('/v1')
 
   const newUrl =
-    currentUrl.substring(0, start + 6) +
-    currentEffects +
-    newEffects +
-    currentUrl.substring(end)
+    currentUrl.substring(0, start + 6) + currentEffects + newEffects + currentUrl.substring(end)
 
   return newUrl
 }

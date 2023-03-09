@@ -44,6 +44,7 @@ export function useDropzone() {
     if (file.type && !file.type.includes('image')) {
       setError('Only images are allowed')
       setDropzoneState(DROP_ZONE_STATE.ERROR)
+
       return
     }
 
@@ -71,6 +72,7 @@ export function useDropzone() {
     if (file.type && !file.type.includes('image')) {
       setError('Only images are allowed')
       setDropzoneState(DROP_ZONE_STATE.ERROR)
+
       return
     }
 

@@ -9,16 +9,10 @@ const hoverClass =
 
 export default function TestImage({ imgSrc, imgAlt, onClick }) {
   return (
-    <button onClick={onClick} className={buttonClass}>
-      <img
-        src={imgSrc}
-        alt={imgAlt}
-        className={imagesClass}
-        loading="lazy"
-        draggable="false"
-      />
+    <button className={buttonClass} onClick={onClick}>
+      <img alt={imgAlt} className={imagesClass} draggable="false" loading="lazy" src={imgSrc} />
 
-      <div className={hoverClass}></div>
+      <div className={hoverClass} />
     </button>
   )
 }

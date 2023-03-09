@@ -17,10 +17,10 @@ export default function Header() {
         <ButtonTheme />
 
         <Link
-          href="https://github.com/vlunaklick/stylenow"
           className="text-sm font-medium hover:bg-indigo-600 transition-colors bg-indigo-500 px-2 py-1 rounded hidden min-[280px]:flex"
-          target="_blank"
+          href="https://github.com/vlunaklick/stylenow"
           rel="noopener noreferrer"
+          target="_blank"
         >
           <span className="text-white fill-white text-xs font-medium transition-colors flex items-center">
             <GitHub className="w-5 h-5 inline-block mr-1" />

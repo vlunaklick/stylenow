@@ -7,15 +7,15 @@ export default function Footer() {
         <div className="flex gap-4 items-center">
           <p className="sm:text-sm text-xs text-slate-500 text-center dark:text-slate-400">
             Made with{' '}
-            <span role="img" aria-label="love">
+            <span aria-label="love" role="img">
               💙
             </span>{' '}
             for{' '}
             <a
-              href="https://www.twitch.tv/midudev"
-              target="_blank"
-              rel="noreferrer"
               className="text-[#09f] font-bold border-b border-transparent hover:border-[#09f]"
+              href="https://www.twitch.tv/midudev"
+              rel="noreferrer"
+              target="_blank"
             >
               @midudev
             </a>
@@ -26,7 +26,7 @@ export default function Footer() {
           <p className="sm:text-sm text-xs text-slate-500 text-center dark:text-slate-400">
             Powered by{' '}
           </p>
-          <a href="https://cloudinary.com/" target="_blank" rel="noreferrer">
+          <a href="https://cloudinary.com/" rel="noreferrer" target="_blank">
             <Cloudinary className="w-20 sm:w-24" />
           </a>
         </div>

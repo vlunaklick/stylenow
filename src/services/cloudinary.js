@@ -1,7 +1,6 @@
 import { Cloudinary } from '@cloudinary/url-gen'
 import { quality } from '@cloudinary/url-gen/actions/delivery'
 import { v4 as uuidv4 } from 'uuid'
-
 import {
   grayscale,
   pixelate,
@@ -28,6 +27,7 @@ const cloudinary = new Cloudinary({
 
 export const uploadImage = async file => {
   const formData = new FormData()
+
   formData.append('upload_preset', 'ml_default')
   formData.append('timestamp', Date.now() / 1000)
   formData.append('api_key', 892432879355161)
@@ -83,21 +83,11 @@ export const hueImage = (publicId, hueLevel = 80) => {
   return image.toURL()
 }
 
-export const pixeleteImageZone = (
-  publicId,
-  widthImg,
-  heightImg,
-  xImg,
-  yImg
-) => {
+export const pixeleteImageZone = (publicId, widthImg, heightImg, xImg, yImg) => {
   const image = cloudinary.image(publicId)
 
   image
-    .effect(
-      pixelate().region(
-        custom().width(widthImg).height(heightImg).x(xImg).y(yImg)
-      )
-    )
+    .effect(pixelate().region(custom().width(widthImg).height(heightImg).x(xImg).y(yImg)))
     .resize(fill())
 
   image.adjust(pixelate().amount(10))
@@ -153,11 +143,7 @@ export const addSharpen = (publicId, sharpenStrength = 100) => {
   return image.toURL()
 }
 
-export const colorizeImage = (
-  publicId,
-  levelIntensity = 50,
-  colorType = '#ff0000'
-) => {
+export const colorizeImage = (publicId, levelIntensity = 50, colorType = '#ff0000') => {
   const image = cloudinary.image(publicId)
 
   image.effect(colorize().level(levelIntensity).color(colorType))
